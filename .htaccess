@@ -1,0 +1,5 @@
+
+RewriteEngine on
+RewriteCond %{HTTP_HOST} ^serasi\.bbpomsurabaya\.com$
+RewriteRule ^/?$ "https\:\/\/serasi\.bbpomsurabaya\.com\/" [R=301,L]
+
