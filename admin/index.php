@@ -47,7 +47,7 @@ $det = mysqli_fetch_array($detail_current);
   <meta name="author" content="">
 
   <title>SERASI -BBPOM Di Surabaya</title>
-  <link rel="shortcut icon" href="../assets/img/favicon.ico">
+  <link rel="shortcut icon" href="../img/favicon.png">
 
   <!-- Custom fonts for this template-->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">

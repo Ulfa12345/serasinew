@@ -13,7 +13,7 @@
   <!-- Custom fonts for this template-->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-  <link rel="icon" type="image/x-icon" href="../assets/img/favicon.ico" />
+  <link rel="icon" type="image/x-icon" href="../img/favicon.png" />
 
   <!-- Custom styles for this template-->
   <link href="css/sb-admin-2.min.css" rel="stylesheet">
@@ -54,7 +54,7 @@
                       <input type="text" class="form-control form-control-user" id="username" name="username" aria-describedby="userHelp" placeholder="Masukkan Username..." required >
                     </div>
                     <div class="input-group">
-                      <input class="form-control form-control-user" type="password" name="pswd" placeholder="Password" id="pswd" autocomplete="current-password">
+                      <input class="form-control form-control-user" type="password" name="password" placeholder="Password" id="pswd" autocomplete="current-password">
                       <div class="input-group-append">
                         <span class="input-group-text"><i class="fa fa-eye fa-fw" style="cursor: pointer;" onclick = "showpswd()"></i></span>
                       </div>

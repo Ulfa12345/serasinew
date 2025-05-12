@@ -1,4 +1,5 @@
 <?php
+$idcek = $_GET['id'];
 $detail_prod=$conn -> query("SELECT * FROM tbl_psb_pangan
                             INNER JOIN tbl_detail_client ON tbl_psb_pangan.id_detail=tbl_detail_client.id_detail
                             WHERE tbl_psb_pangan.id_detail = '".$_SESSION['id_detail']."'
@@ -41,6 +42,11 @@ $detail_doc = $conn -> query("SELECT * FROM tbl_doc_psb_pangan
                   <tbody>
                     <?php
                     while($prod = mysqli_fetch_array($detail_doc)){
+                      $cekdok = $conn -> query("SELECT * FROM tbl_doc_psb_pangan WHERE id_psb = '".$idcek."' AND status = '0'");
+                      if(mysqli_num_rows($cekdok) == '0'){
+                        $conn -> query("UPDATE tbl_psb_pangan SET status_psb='1' WHERE id_psb = '".$idcek."'");
+                        $conn -> query("INSERT INTO tbl_tgl_psb(id_tgl, id_psb, tanggal_psb, hasil_tgl) VALUES ('','".$idcek."','0','0')");
+                      }
                     ?>
                     <tr>
                       <td><?php echo $prod['id_doc']; ?></td>

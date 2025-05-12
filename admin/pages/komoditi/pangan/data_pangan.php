@@ -44,13 +44,33 @@ $detail_psb=$conn -> query("SELECT * FROM tbl_psb_pangan
                           else if($detpsb['status_psb'] == '1'){
                             echo "<span class='badge badge-success'>Data Profil Lengkap</span><br>";
                             echo "<span class='badge badge-success'>Dokumen Lengkap</span><br>"; 
+                            echo "<span class='badge badge-warning'>Tanggal Pemeriksaan Belum Ditentukan</span>"; 
+                          }
+                          else if($detpsb['status_psb'] == '2'){
+                            echo "<span class='badge badge-success'>Data Profil Lengkap</span><br>";
+                            echo "<span class='badge badge-success'>Dokumen Lengkap</span><br>"; 
+                            echo "<span class='badge badge-success'>Tanggal Pemeriksaan Sudah Ditentukan</span>"; 
                             echo "<span class='badge badge-warning'>Menunggu Konfirmasi</span>"; 
+                          }
+                          else if($detpsb['status_psb'] == '3'){
+                            echo "<span class='badge badge-success'>Data Profil Lengkap</span><br>";
+                            echo "<span class='badge badge-success'>Dokumen Lengkap</span><br>"; 
+                            echo "<span class='badge badge-success'>Tanggal Pemeriksaan Sudah Ditentukan</span><br>"; 
+                            echo "<span class='badge badge-success'>Tanggal Sudah dikonfirmasi</span><br>"; 
+                            echo "<span class='badge badge-primary'>PSB Sarana Anda sudah dijadwalkan</span>"; 
+                          }
+                          else if($detpsb['status_psb'] == '4'){
+                            echo "<span class='badge badge-success'>Data Profil Lengkap</span><br>";
+                            echo "<span class='badge badge-success'>Dokumen Lengkap</span><br>"; 
+                            echo "<span class='badge badge-success'>Tanggal Pemeriksaan Sudah Ditentukan</span><br>"; 
+                            echo "<span class='badge badge-success'>Tanggal Sudah dikonfirmasi</span><br>"; 
+                            echo "<span class='badge badge-danger'>Pengajuan Anda Belum diterima</span>"; 
                           }
                         ?>
                       </td>
                       <td>
-                          <a href="#" class="btn btn-secondary" type="button" id="preview" title="Preview Data PSB" data-toggle="modal" data-id=""><i class="fa fa-eye"></i></a>&nbsp;
                           <?php
+                          if ($detpsb['status_psb'] == '0'){
                             if($detpsb['perihal_psb'] == 'produksi'){
                           ?>
                           <a href="index.php?page=docprod&id=<?=$detpsb['id_psb'];?>" class="btn btn-warning" type="button" id="uploadproduksi" title="Upload Data PSB Produksi"><i class="fa fa-upload"></i></a>&nbsp;
@@ -59,9 +79,16 @@ $detail_psb=$conn -> query("SELECT * FROM tbl_psb_pangan
                           ?>
                           <a href="index.php?page=docdist&id=<?=$detpsb['id_psb'];?>" class="btn btn-warning" type="button" id="uploaddistribusi" title="Upload Data PSB Distribusi"><i class="fa fa-upload"></i></a>&nbsp;
                           <?php
-                            }
+                            }} else if ($detpsb['status_psb'] == '1'){
                           ?>
-                          <a href="pages/driver/hapus.php?id=<?=$row_drv['id_driver'];?>" class="btn btn-danger" role="button" title="Hapus Data Driver" onclick="return confirm('Apakah anda yakin akan menghapus data ini?')"><i class="fa fa-trash"></i></a>
+                          <a href="#tanggalperiksa" class="btn btn-primary" type="button" id="tanggalperiksa<?php echo $detpsb['id_psb']; ?>" title="Tetapkan Tanggal Pemeriksaan" data-toggle="modal" data-id="<?php echo $detpsb['id_psb']; ?>"><i class="fa fa-calendar"></i></a>&nbsp;
+                        <?php } else if ($detpsb['status_psb'] == '2'){ ?>
+                          <a href="#" class="btn btn-primary" type="button" id="preview" title="Lihat Hasil Konfirmasi PSB" data-toggle="modal" data-id=""><i class="fa fa-eye"></i></a>&nbsp;
+                        <?php } else if ($detpsb['status_psb'] == '3'){ ?>
+                          <a href="pages/komoditi/pangan/print_form.php?id=<?=$detpsb['id_psb'];?>" target="_blank" class="btn btn-primary" type="button" id="download" title="Download Form"><i class="fa fa-download"></i></a>&nbsp;
+                        <?php } ?>
+                          <a href="#konfirmasipsb" class="btn btn-warning" type="button" id="konfirmasipsb<?php echo $detpsb['id_psb']; ?>" title="Konfirmasi Tanggal Pemeriksaan" data-toggle="modal" data-id="<?php echo $detpsb['id_psb']; ?>"><i class="fa fa-edit"></i></a>&nbsp;
+                          <!-- <a href="pages/komoditi/pangan/action/del_psb.php?id=<?=$detpsb['id_psb'];?>" class="btn btn-danger dsabled" role="button" title="Hapus Data Driver" onclick="return confirm('Apakah anda yakin akan menghapus data ini?')"><i class="fa fa-trash"></i></a> -->
                       </td>
                     </tr>
                   <?php } ?>
@@ -77,3 +104,86 @@ $detail_psb=$conn -> query("SELECT * FROM tbl_psb_pangan
 
       </div>
       <!-- End of Main Content -->
+
+      <div class="modal fade" id="tanggalperiksa" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header bg-success text-light">
+                    Tanggal Pemeriksaan
+                </div>
+                <div class="modal-body">
+                    <div class="fetched-data"></div>
+                </div>
+                <!-- <div class="modal-footer">
+                    <button type="button" class="btn btn-warning" data-dismiss="modal">Tutup</button>
+                </div> -->
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="konfirmasipsb" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header bg-success text-light">
+                    Konfirmasi Tanggal Pemeriksaan
+                </div>
+                <div class="modal-body">
+                    <div class="fetched-data"></div>
+                </div>
+                <!-- <div class="modal-footer">
+                    <button type="button" class="btn btn-warning" data-dismiss="modal">Tutup</button>
+                </div> -->
+            </div>
+        </div>
+    </div>
+
+ <!-- Bootstrap core JavaScript-->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Page level plugins -->
+  <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+  <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+  <!-- Page level custom scripts -->
+  <script src="js/demo/datatables-demo.js"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="js/sb-admin-2.min.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+        $('#tanggalperiksa').on('show.bs.modal', function (e) {
+            var row = $(e.relatedTarget).data('id');
+            //menggunakan fungsi ajax untuk pengambilan data
+            $.ajax({
+                type : 'post',
+                url : 'pages/komoditi/pangan/modal/tgl_psb.php',
+                data :  'row='+ row,
+                success : function(data){
+                $('.fetched-data').html(data);//menampilkan data ke dalam modal
+                }
+            });
+         });
+    });
+  </script>
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+        $('#konfirmasipsb').on('show.bs.modal', function (e) {
+            var row = $(e.relatedTarget).data('id');
+            //menggunakan fungsi ajax untuk pengambilan data
+            $.ajax({
+                type : 'post',
+                url : 'pages/komoditi/pangan/modal/konfirmasi_psb.php',
+                data :  'row='+ row,
+                success : function(data){
+                $('.fetched-data').html(data);//menampilkan data ke dalam modal
+                }
+            });
+         });
+    });
+  </script>
