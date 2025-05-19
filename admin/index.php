@@ -2,6 +2,7 @@
 session_start();
 
 $timeout = 18000; // Number of seconds until it times out.
+//$logout_redirect = 'login.php';
  
 // Check if the timeout field exists.
 if(isset($_SESSION['timeout'])) {
@@ -23,16 +24,20 @@ $_SESSION['start_session']=time();
 $_SESSION['timeout'] = time();
 
 include "../conf/conn.php";
-if(isset($_SESSION['id_detail'])==0){
-echo '<script>
-window.location.href="login.php"</script>';
-}else{
-$detail=$conn -> query("SELECT * FROM tbl_detail_client");
-$detail_current=$conn -> query("SELECT * FROM tbl_detail_client
-                                INNER JOIN tbl_perusahaan ON tbl_detail_client.id_perusahaan=tbl_perusahaan.id_perusahaan
-                                INNER JOIN tbl_gudang ON tbl_detail_client.id_gudang=tbl_gudang.id_gudang
-                                WHERE id_detail = '".$_SESSION['id_detail']."'");
-$det = mysqli_fetch_array($detail_current);
+// Pastikan user sudah login
+
+$perusahaan = [];
+if (isset($_SESSION['id_perusahaan'])) {
+    $id_perusahaan = $_SESSION['id_perusahaan'];
+    $stmt = $conn->prepare("SELECT * FROM tb_perusahaan WHERE id_perusahaan = ?");
+    $stmt->bind_param("i", $id_perusahaan);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $perusahaan = $result->fetch_assoc();
+    $stmt->close();
+    
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -111,18 +116,18 @@ $det = mysqli_fetch_array($detail_current);
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMoney" aria-expanded="true" aria-controls="collapseUtilities">
           <i class="fas fa-fw fa-credit-card"></i>
-          <span>Komoditi</span>
+          <span>Dokumen</span>
         </a>
         <div id="collapseMoney" class="collapse" aria-labelledby="headingMoney" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">List Komoditi Terdaftar :</h6>
+            <h6 class="collapse-header">List Dokumen Terdaftar :</h6>
             <?php
               include "../conf/conn.php";
-              $komoditi = $conn -> query("SELECT * FROM tbl_detail_client INNER JOIN tbl_komoditi ON tbl_detail_client.id_komoditi=tbl_komoditi.id_komoditi WHERE username = '".$_SESSION['username']."'");
-              while($currentkom = mysqli_fetch_array($komoditi)){
+              $dok = $conn -> query("SELECT * FROM tb_perusahaan WHERE id_perusahaan = '".$_SESSION['id_perusahaan']."'");
+              //while($currentkom = mysqli_fetch_array($komoditi)){
             ?>
-            <a class="collapse-item" href="./index.php?page=<?php echo $currentkom['id_komoditi']; ?>"><?php echo $currentkom['nama_komoditi']; ?></a>
-            <?php } ?>
+            <a class="collapse-item" href="./index.php?page=<?php echo $currentkom['id_perusahaan']; ?>"><?php echo $currentkom['nama_perusahaan']; ?></a>
+            <?php // } ?>
           </div>
         </div>
       </li>
@@ -142,48 +147,6 @@ $det = mysqli_fetch_array($detail_current);
       </li>
       <!-- Divider -->
       <hr class="sidebar-divider">
-
-      <!-- Heading -->
-     <!--  <div class="sidebar-heading">
-        Addons
-      </div> -->
-
-      <!-- Nav Item - Pages Collapse Menu -->
-      <!-- <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
-          <i class="fas fa-fw fa-folder"></i>
-          <span>Pages</span>
-        </a>
-        <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Login Screens:</h6>
-            <a class="collapse-item" href="login.html">Login</a>
-            <a class="collapse-item" href="register.html">Register</a>
-            <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
-            <div class="collapse-divider"></div>
-            <h6 class="collapse-header">Other Pages:</h6>
-            <a class="collapse-item" href="404.html">404 Page</a>
-            <a class="collapse-item" href="blank.html">Blank Page</a>
-          </div>
-        </div>
-      </li>
- -->
-      <!-- Nav Item - Charts -->
-     <!--  <li class="nav-item">
-        <a class="nav-link" href="charts.html">
-          <i class="fas fa-fw fa-chart-area"></i>
-          <span>Charts</span></a>
-      </li> -->
-
-      <!-- Nav Item - Tables -->
-      <!-- <li class="nav-item">
-        <a class="nav-link" href="tables.html">
-          <i class="fas fa-fw fa-table"></i>
-          <span>Tables</span></a>
-      </li> -->
-
-      <!-- Divider -->
-      <!-- <hr class="sidebar-divider d-none d-md-block"> -->
 
       <!-- Sidebar Toggler (Sidebar) -->
       <div class="text-center d-none d-md-inline">
@@ -352,7 +315,7 @@ $det = mysqli_fetch_array($detail_current);
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $det['nama_detail'] ?></span>
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $perusahaan['nama_perusahaan'] ?></span>
                 <img class="img-profile rounded-circle" src="https://pbs.twimg.com/profile_images/591109154699235328/82oJv6My_400x400.jpg">
               </a>
               <!-- Dropdown - User Information -->
@@ -444,4 +407,3 @@ $det = mysqli_fetch_array($detail_current);
 </body>
 
 </html>
-<?php } ?>

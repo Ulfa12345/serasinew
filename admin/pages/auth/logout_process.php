@@ -1,7 +1,7 @@
 <?php
 session_start();
 include '../../../conf/conn.php';
-$sess_admin = $_SESSION['id_detail'];
+$sess_admin = $_SESSION['id_perusahaan'];
 if (isset($sess_admin))
 {
 // remove all session variables

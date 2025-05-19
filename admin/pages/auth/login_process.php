@@ -1,33 +1,49 @@
 <?php
+session_start();
 include "../../../conf/conn.php";
-$username = $conn -> real_escape_string($_POST['username']);
-$password = $conn -> real_escape_string($_POST['password']);
-$check = $conn->query("SELECT * FROM tb_client WHERE username = '$username' AND password = '$password'");
-/*$check    = $conn->query("SELECT * FROM tbl_detail_client
-							//INNER JOIN tbl_perusahaan ON tbl_detail_client.id_perusahaan=tbl_perusahaan.id_perusahaan
-  							//INNER JOIN tbl_gudang ON tbl_detail_client.id_gudang=tbl_gudang.id_gudang
-  							//WHERE username = '$username' AND password = '$password'") or die($conn->error());*/
-if(mysqli_num_rows($check) >= 1){
-	while($row = mysqli_fetch_array($check)){
-		session_start();
-		$_SESSION['id_client'] = $row['id_client'];
-		$_SESSION['username'] = $row['username'];
-		
-		<script>window.location.href="../../index.php?page=profil"</script>
 
-		/*if($row['npwp_perusahaan'] == '0' || $row['npwp_gudang'] == '0'){
-			?>
-			<script>alert("Data Anda belum Lengkap. Silahkan Melengkapi Data Terlebih Dahulu");
-			window.location.href="../../index.php?page=profil"</script>
-			<?php
-		} else{
-		?>
-			<script>window.location.href="../../index.php"</script>
-		<?php
-		}*/
-	}
-}else{
-	echo '<script>alert("Masukan Username dan Password dengan Benar !!!");
-	window.location.href="../../login.php"</script>';
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $username = $conn->real_escape_string($_POST['nib']);
+    $password = $_POST['password'];
+
+    // Cek apakah field kosong
+    if (empty($username) || empty($password)) {
+        echo '<script>alert("NIB dan Password tidak boleh kosong!"); window.location.href="../../login.php";</script>';
+        exit;
+    }
+
+    // Query untuk ambil data perusahaan dan gudang
+    $query =  "SELECT * FROM tb_perusahaan 
+              LEFT JOIN tb_gudang ON tb_perusahaan.id_perusahaan = tb_gudang.id_perusahaan
+              WHERE tb_perusahaan.nib = '$username'";
+    $result = $conn->query($query);
+
+    if (!$result) {
+        echo '<script>alert("Terjadi kesalahan saat mengakses database!"); window.location.href="../../login.php";</script>';
+        exit;
+    }
+
+    // ...
+if ($result->num_rows === 1) {
+    $row = $result->fetch_assoc();
+
+    if (password_verify($password, $row['password'])) {
+        $_SESSION['id_perusahaan'] = $row['id_perusahaan'];
+        $_SESSION['nib'] = $row['nib'];
+        $_SESSION['nama_perusahaan'] = $row['nama_perusahaan'];
+
+        if ($row['id_gudang'] == '0' || empty($row['id_gudang'])) {
+            echo '<script>alert("Data Anda belum lengkap. Silahkan lengkapi data terlebih dahulu."); window.location.href="../../index.php?page=profil";</script>';
+        } else {
+            echo '<script>window.location.href="../../index.php";</script>';
+        }
+    } else {
+        echo '<script>alert("Password salah!"); window.location.href="../../login.php";</script>';
+    }
+
+  } else {
+        //die(var_dump($query));
+        echo '<script>alert("NIB tidak ditemukan!"); window.location.href="../../login.php";</script>';
+    }
 }
 ?>

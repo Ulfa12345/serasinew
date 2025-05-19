@@ -1,11 +1,12 @@
 <?php
-if (isset($_GET['pilihan'])){
+/*if (isset($_GET['pilihan'])){
 	$pilihan = $_GET['pilihan'];
-
+*/
 include "../conf/conn.php";
 
-$currentkomoditi = $conn -> query("SELECT * FROM tbl_komoditi WHERE id_komoditi = '".$pilihan."'");
+/*$currentkomoditi = $conn -> query("SELECT * FROM tbl_komoditi WHERE id_komoditi = '".$pilihan."'");
 $ckom = mysqli_fetch_array($currentkomoditi);
+*/
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,7 +27,7 @@ $ckom = mysqli_fetch_array($currentkomoditi);
 
   <!-- Custom styles for this template-->
   <link href="css/sb-admin-2.min.css" rel="stylesheet">
-  <link rel="icon" type="image/x-icon" href="../assets/img/favicon.ico" />
+  <link rel="icon" type="image/x-icon" href="../img/favicon.png" />
 
 </head>
 
@@ -44,36 +45,30 @@ $ckom = mysqli_fetch_array($currentkomoditi);
           <div class="col-lg-6">
             <div class="p-5">
               <div class="text-center">
-                <h1 class="h4 text-gray-900 mb-4">Pendaftaran Akun Baru <span class="badge badge-primary" style="font-size: 50%;">Komoditi <?php echo $ckom['nama_komoditi']; ?></span></h1>
+                <h1 class="h4 text-gray-900 mb-4">Pendaftaran Akun Baru <span class="badge badge-primary" style="font-size: 50%;"></span></h1>
               </div>
-              <form class="user" action="pages/auth/signup_process.php" method="post">
+              <form class="user" action="pages/auth/register_proces.php" method="post">
                 <div class="form-group">
-                  <input type="text" class="form-control form-control-user" id="nama" name="nama" placeholder="Nama Lengkap" required>
-                </div>
-                <div class="form-group">
-                  <input type="text" class="form-control form-control-user" id="username" name="username" placeholder="Username" required>
+                  <input type="number" class="form-control form-control-user" id="username" name="nib" placeholder="Input NIB yang telah didapatkan dari OSS" required>
                 </div>
                 <div class="form-group">
-                  <input type="email" class="form-control form-control-user" id="email" name="email" placeholder="Email" required>
+                  <input type="text" class="form-control form-control-user" id="username" name="nama_perush" placeholder="Nama Perusahaan" required>
                 </div>
                 <div class="form-group">
-                  <input type="text" class="form-control form-control-user" id="alamat" name="alamat" placeholder="Alamat" required>
+                  <textarea class="form-control form-control-user" id="nama" name="alamat_perush" placeholder="Alamat Perusahaan" required rows="3"></textarea>
                 </div>
                 <div class="form-group">
-                  <input type="text" class="form-control form-control-user" id="jabatan" name="jabatan" placeholder="Jabatan" required>
+                  <input type="email" class="form-control form-control-user" id="email" name="email" placeholder="Email Perusahaan" required>
                 </div>
                 <div class="form-group">
-                  <input type="number" class="form-control form-control-user" id="notelp" name="notelp" placeholder="Nomor Telepon / HP" required>
+                  <input type="text" class="form-control form-control-user" id="nama" name="nama" placeholder="Nama Penanggung Jawab" required>
                 </div>
-                <div class="form-group row alert alert-secondary">
-                  <div class="col-sm-6 text-center">
-                    Komoditi
-                  </div>
-                  <div class="col-sm-6 text-center">
-                    <?php echo $ckom['nama_komoditi']; ?>
-                    <input type="hidden" id="id_komoditi" name="id_komoditi" value="<?php echo $ckom['id_komoditi']; ?>" placeholder="Komoditi" class="login"/>
-                  </div>
+                <div class="form-group">
+                  <input type="number" class="form-control form-control-user" id="notelp" name="no_wa" placeholder="Nomor WA yang bisa dihubungi untuk notifikasi pendaftaran" required>
                 </div>
+                <div class="form-group">
+                  <input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Buat password untuk login ke akun anda" required>
+                </div>                
                 <button class="button btn btn-success btn-large btn-user btn-block" type="submit">Register</button>
               </form>
               <hr>
@@ -117,10 +112,3 @@ $ckom = mysqli_fetch_array($currentkomoditi);
 </body>
 
 </html>
-
-<?php
-} else{
-	echo '<script>alert("Silahkan Memilih Komoditi Terlebih Dahulu !!!");
-	window.location.href="../"</script>';
-}
- ?>

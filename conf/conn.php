@@ -1,5 +1,5 @@
 <?php
-$conn = new mysqli("localhost","root","","db_serasi");
+$conn = new mysqli("localhost","root","","db_serasinew");
 
 // Check connection
 if ($conn -> connect_errno) {

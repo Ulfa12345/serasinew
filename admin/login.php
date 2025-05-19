@@ -47,11 +47,11 @@
               <div class="col-lg-6">
                 <div class="p-5">
                   <div class="text-center">
-                    <h1 class="h4 text-gray-900 mb-4">SERASI | LOGIN<br><small class="badge badge-success">- Sistem Informasi Registrasi & Sertifikasi -</small></h1>
+                    <h1 class="h4 text-gray-900 mb-4">SERASI | LOGIN<br><small class="badge badge-success">- Sistem Pengajuan Denah PBF -</small></h1>
                   </div>
                   <form action="pages/auth/login_process.php" method="post" class="user">
                     <div class="form-group">
-                      <input type="text" class="form-control form-control-user" id="username" name="username" aria-describedby="userHelp" placeholder="Masukkan Username..." required >
+                      <input type="number" class="form-control form-control-user" id="username" name="nib" aria-describedby="userHelp" placeholder="Masukkan NIB..." required >
                     </div>
                     <div class="input-group">
                       <input class="form-control form-control-user" type="password" name="password" placeholder="Password" id="pswd" autocomplete="current-password">
