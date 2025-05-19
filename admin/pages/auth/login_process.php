@@ -32,6 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		//die(var_dump($query));
 		echo '<script>alert("Password salah!"); window.location.href="../../login.php";</script>';
 	}
+
 	$_SESSION['id_perusahaan'] = $row['id_perusahaan'];
 	$_SESSION['nib'] = $row['nib'];
 	$_SESSION['nama_perusahaan'] = $row['nama_perusahaan'];
@@ -59,5 +60,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	//         //die(var_dump($query));
 	//         echo '<script>alert("NIB tidak ditemukan!"); window.location.href="../../login.php";</script>';
 	//     }
-};
-?>
+}
