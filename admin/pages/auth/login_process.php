@@ -31,6 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	if (!password_verify($password, $row['password'])) {
 		//die(var_dump($query));
 		echo '<script>alert("Password salah!"); window.location.href="../../login.php";</script>';
+		exit;
 	}
 
 	$_SESSION['id_perusahaan'] = $row['id_perusahaan'];
