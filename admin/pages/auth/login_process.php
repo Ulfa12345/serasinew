@@ -45,5 +45,5 @@ if ($result->num_rows === 1) {
         //die(var_dump($query));
         echo '<script>alert("NIB tidak ditemukan!"); window.location.href="../../login.php";</script>';
     }
-}
+};
 ?>
