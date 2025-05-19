@@ -13,9 +13,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Query untuk ambil data perusahaan dan gudang
-    $query =  "SELECT * FROM tb_perusahaan 
-              LEFT JOIN tb_gudang ON tb_perusahaan.id_perusahaan = tb_gudang.id_perusahaan
-              WHERE tb_perusahaan.nib = '$username'";
+    // $query =  "SELECT * FROM tb_perusahaan 
+    //           LEFT JOIN tb_gudang ON tb_perusahaan.id_perusahaan = tb_gudang.id_perusahaan
+    //           WHERE tb_perusahaan.nib = '$username'";
+	$query = "SELECT * FROM tb_perusahaan WHERE nib = '$username' LIMIT 1";
     $result = $conn->query($query);
 
     if (!$result) {
