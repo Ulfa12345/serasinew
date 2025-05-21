@@ -63,6 +63,12 @@ if (isset($_SESSION['id_perusahaan'])) {
   <!-- Custom styles for this page -->
   <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
+  <!-- Bootstrap CSS & JS 
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">-->
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
 </head>
 
 <body id="page-top">
@@ -107,7 +113,8 @@ if (isset($_SESSION['id_perusahaan'])) {
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Data Pengguna :</h6>
-            <a class="collapse-item" href="./index.php?page=profil">Identitas Diri</a>
+            <a class="collapse-item" href="./index.php?page=profil">Form Lengkapi Data</a>
+            <a class="collapse-item" href="./index.php?page=datagudang">Data Perusahaan</a>
             </div>
         </div>
       </li>

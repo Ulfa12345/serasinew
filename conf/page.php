@@ -6,6 +6,9 @@ switch ($page) {
   case 'profil':
     include "pages/profil/profil.php";
     break;
+  case 'datagudang':
+    include "pages/profil/datagudang.php";
+    break;
 
 //Komoditi Pangan
   case '2121':
