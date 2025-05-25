@@ -92,7 +92,7 @@ try {
         upload_ijin_pbf,
         upload_sipa,
         upload_denahbaru,
-        upload_denahlama,
+        upload_denahlama
     ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 
     // Bind parameter menggunakan variabel
