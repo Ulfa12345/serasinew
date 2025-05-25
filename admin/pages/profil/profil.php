@@ -66,9 +66,22 @@
                                 id="password" value="<?php echo $perusahaan['password']; ?>" disabled>
                         </div>
                     </div>-->
-                    <button class="btn btn-warning" data-toggle="modal" data-target="#editPerusahaanModal">
-                        <i class="fas fa-edit"></i> Edit Data Perusahaan
-                    </button>
+
+                    <!-- Alert 
+                    <form class="upload-form" action="pages/profil/uploadnib.php" method="post" enctype="multipart/form-data"> 
+                        <div class="alert alert-danger alert-dismissible fade show danger-pulse" role="alert">                  
+                        <label for="email" class="col-sm-4 col-form-label">Upload NIB</label>
+                        <input type="file" id="file-input" name="upload_nib" accept=".pdf,.jpg,.png">   
+                        </div>
+
+                        <div class="d-flex justify-content-end">
+                        <button type="submit" class="btn btn-primary px-4">
+                            <i class="fas fa-save"></i> Simpan
+                        </button>                
+                        </div>
+
+                    </form>-->
+                    
                 </div>
             </div>
         </div>
@@ -76,141 +89,108 @@
 
     <!-- Form Tambah Gudang Section -->
     <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-success">
-                <i class="fa fa-warehouse"></i> Lengkapi Data Gudang
-            </h6>
-        </div>
-        <div class="card-body">
-            <form method="POST" action="pages/profil/proses_tambah_gudang.php">
-                <div class="form-group mb-4">
-                    <label for="nama_gudang">Nama Gudang</label>
-                    <input type="text" class="form-control" 
-                        id="nama_gudang" name="nama_gudang" 
-                        maxlength="100" required>
-                    <small class="form-text text-muted">Maksimal 100 karakter</small>
-                </div>
-
-                <div class="form-group mb-4">
-                    <label for="alamat_gudang">Alamat Gudang</label>
-                    <input type="text" class="form-control" 
-                        id="alamat_gudang" name="alamat_gudang" 
-                        maxlength="100" required>
-                </div>
-
-                <div class="form-group mb-4">
-                    <label for="keterangan">Keterangan</label>
-                    <textarea class="form-control" id="keterangan" 
-                        name="keterangan" rows="3" required></textarea>
-                </div>
-
-                <div class="d-flex justify-content-end">
-                    <button type="submit" class="btn btn-primary px-4">
-                        <i class="fas fa-save"></i> Simpan
-                    </button>
-                </div>
-            </form>
-        </div>
+    <div class="card-header py-3 alert alert-danger alert-dismissible fade show danger-pulse ">
+        <h6 class="m-0 font-weight-bold text-success">
+            <i class="fa fa-warehouse"></i> Lengkapi Data
+        </h6>
     </div>
-</div>
+    <div class="card-body">
+        <form method="POST" action="pages/profil/proses_tambah_gudang.php" enctype="multipart/form-data">
+            <div class="row"> <!-- Baris Utama -->
+                <!-- Kolom Kiri -->
+                <div class="col-md-6">
+                    <div class="form-group mb-4" role="alert">
+                        <label for="upload_nib">Upload NIB</label>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" 
+                                id="upload_nib" name="upload_nib" 
+                                accept=".pdf,.jpg,.png">
+                            <label class="custom-file-label" for="upload_nib">
+                                Pilih file...
+                            </label>
+                        </div>
+                        <small class="form-text text-muted">Format: PDF, JPG, PNG (Maks. 5MB)</small>
+                    </div>
+                    <div class="form-group mb-4">
+                        <label for="nama_gudang">Nama Gudang</label>
+                        <input type="text" class="form-control" 
+                            id="nama_gudang" name="nama_gudang" 
+                            maxlength="100" required>
+                        <small class="form-text text-muted">Maksimal 100 karakter</small>
+                    </div>
 
-<!-- Modal Edit Perusahaan -->
-<div class="modal fade" id="editPerusahaanModal" tabindex="-1" role="dialog" aria-labelledby="editPerusahaanModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header bg-primary text-white">
-                <h5 class="modal-title" id="editPerusahaanModalLabel">Edit Profil Perusahaan</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <div class="form-group mb-4">
+                        <label for="alamat_gudang">Alamat Gudang</label>
+                        <input type="text" class="form-control" 
+                            id="alamat_gudang" name="alamat_gudang" 
+                            maxlength="100" required>
+                    </div>
+                </div>
+
+                <!-- Kolom Kanan -->
+                <div class="col-md-6">
+                    
+
+                    <div class="form-group mb-4">
+                        <label for="keterangan">Keterangan</label>
+                        <textarea class="form-control" id="keterangan" 
+                            name="keterangan" rows="5" required></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tombol Submit -->
+            <div class="d-flex justify-content-end mt-4">
+                <button type="submit" class="btn btn-primary px-4">
+                    <i class="fas fa-save"></i> Simpan
                 </button>
             </div>
-            <form id="formEditPerusahaan" method="POST" action="pages/profil/proses_edit_perusahaan.php">
-                <div class="modal-body">
-                    <!-- NIB -->
-                    <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">NIB</label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" name="nib" value="<?php echo $perusahaan['nib']; ?>" disabled>
-                        </div>
-                    </div>
-
-                    <!-- Nama Perusahaan -->
-                    <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">Nama Perusahaan <span class="text-danger">*</span></label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" name="nama_perusahaan" value="<?php echo $perusahaan['nama_perusahaan']; ?>" required>
-                        </div>
-                    </div>
-
-                    <!-- Alamat Perusahaan -->
-                    <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">Alamat <span class="text-danger">*</span></label>
-                        <div class="col-sm-9">
-                            <textarea class="form-control" name="alamat_perusahaan" rows="2" required><?php echo $perusahaan['alamat_perusahaan'] ?></textarea>
-                        </div>
-                    </div>
-
-                    <!-- Penanggung Jawab -->
-                    <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">Penanggung Jawab <span class="text-danger">*</span></label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" name="penanggung_jawab" value="<?php echo $perusahaan['nama_pic']; ?>" required>
-                        </div>
-                    </div>
-
-                    <!-- Kontak -->
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group row">
-                                <label class="col-sm-4 col-form-label">No. HP <span class="text-danger">*</span></label>
-                                <div class="col-sm-8">
-                                    <input type="tel" class="form-control" name="no_wa_pic" value="<?php echo $perusahaan['no_wa_pic']; ?>" required>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group row">
-                                <label class="col-sm-4 col-form-label">Email <span class="text-danger">*</span></label>
-                                <div class="col-sm-8">
-                                    <input type="email" class="form-control" name="email" value="<?php echo $perusahaan['email']; ?>" required>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                    <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
-                </div>
-            </form>
-        </div>
+        </form>
     </div>
 </div>
 
-
-
+<!-- Script untuk menampilkan nama file -->
 <script>
-// Script untuk handle form submit dengan AJAX
-$(document).ready(function() {
-    $('#formEditPerusahaan').submit(function(e) {
-        e.preventDefault();
-        
-        $.ajax({
-            type: 'POST',
-            url: 'pages/profil/proses_edit_perusahaan.php',
-            data: $(this).serialize(),
-            success: function(response) {
-                const result = JSON.parse(response);
-                if(result.status === 'success') {
-                    window.location.reload();
-                } else {
-                    alert('Error: ' + result.message);
-                }
-            },
-            error: function(xhr) {
-                alert('Terjadi kesalahan: ' + xhr.statusText);
-            }
-        });
-    });
+document.querySelector('.custom-file-input').addEventListener('change', function(e) {
+    const fileName = this.files[0]?.name || 'Pilih file...';
+    this.nextElementSibling.textContent = fileName;
 });
 </script>
+
+
+</div>
+
+
+<!-- Custom CSS Alert2 blink2 -->
+<style>
+    /* Animasi Kombinasi Blink + Pulse */
+    @keyframes red-alert {
+        0% {
+            transform: scale(1);
+            background-color: transparent;
+        }
+        50% {
+            transform: scale(1.02);
+            background-color: transparent;
+        }
+        100% {
+            transform: scale(1);
+            background-color: transparent;
+        }
+    }
+    
+    .danger-pulse {
+        animation: red-alert 1s infinite;
+        border: 2px solid #dc3545;
+    }
+    
+    .danger-pulse:hover {
+        animation: none;
+        background-color:transparent;
+    }
+    
+    .alert-title {
+        color: #dc3545;
+        font-weight: bold;
+        font-size: 1.2em;
+    }

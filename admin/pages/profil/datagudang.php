@@ -31,6 +31,61 @@
                                 id="alamat_perusahaan" value="<?php echo $perusahaan['alamat_perusahaan']; ?>" disabled>
                         </div>
                     </div>
+
+                    <!-- Preview NIB -->
+                    <div class="form-group row mb-3">
+                        <label class="col-sm-4 col-form-label">Dokumen NIB</label>
+                        <div class="col-sm-8">
+                            <?php if(!empty($perusahaan['upload_nib'])): ?>
+                        <div class="card border-left-primary shadow">
+                            <div class="card-body p-2">
+                                <?php
+                                $file_ext = pathinfo($perusahaan['upload_nib'], PATHINFO_EXTENSION);
+                                
+                                // Path yang benar sesuai struktur folder
+                                $server_path = $_SERVER['DOCUMENT_ROOT'] . '/serasinew/admin/pages/upload/nib/' . basename($perusahaan['upload_nib']);
+                                $web_path = '/serasinew/admin/pages/upload/nib/' . basename($perusahaan['upload_nib']);
+                                
+                                if(file_exists($server_path)): ?>
+                                    <?php if(in_array($file_ext, ['jpg', 'jpeg', 'png'])): ?>
+                                        <img src="<?= $web_path ?>" 
+                                            class="img-fluid rounded mb-2 preview-doc" 
+                                            alt="Preview NIB"
+                                            style="max-height: 200px">
+                                            
+                                    <?php elseif($file_ext === 'pdf'): ?>
+                                        <iframe src="<?= $web_path ?>#toolbar=0&navpanes=0" 
+                                                style="width:100%; height:200px;" 
+                                                frameborder="0">
+                                        </iframe>
+                                    <?php endif; ?>
+                                    
+                                    <div class="mt-2">
+                                        <a href="<?= $web_path ?>" 
+                                            target="_blank" 
+                                            class="btn btn-sm btn-primary">
+                                            <i class="fas fa-expand"></i> Fullscreen
+                                        </a>
+                                        <a href="<?= $web_path ?>" 
+                                            download 
+                                            class="btn btn-sm btn-success">
+                                            <i class="fas fa-download"></i> Download
+                                        </a>
+                                    </div>
+                                <?php else: ?>
+                                    <div class="alert alert-danger py-1">
+                                        <i class="fas fa-times-circle"></i> File tidak ditemukan di server
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    <?php else: ?>
+                        <div class="text-muted">
+                            <i class="fas fa-exclamation-circle"></i> Belum ada dokumen terupload
+                        </div>
+                    <?php endif; ?>
+                    </div>
+                </div>
                 </div>
 
                 <!-- Kolom 2 -->
@@ -59,20 +114,9 @@
                         </div>
                     </div>
 
-                    <!--<div class="form-group row mb-3">
-                        <label for="password" class="col-sm-4 col-form-label">Password</label>
-                        <div class="col-sm-8">
-                            <input type="password" name="password" class="form-control-plaintext form-control-user" 
-                                id="password" value="<?php echo $perusahaan['password']; ?>" disabled>
-                        </div>
-                    </div>
-
-                    <a href="index.php?page=profil" class="btn btn-primary btn-icon-split">
-                        <span class="icon text-white-50">
-                            <i class="fas fa-pencil-alt"></i> 
-                        </span>
-                        <span class="text">Edit Data Perusahaan</span>
-                    </a>-->
+                    <button class="btn btn-warning" data-toggle="modal" data-target="#editPerusahaanModal">
+                        <i class="fas fa-edit"></i> Edit Data Perusahaan
+                    </button>
                     
                 </div>
             </div>
@@ -130,7 +174,6 @@
                             <th>Nama Gudang</th>
                             <th>Alamat</th>
                             <th>Keterangan</th>
-                            <th>Perusahaan</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -144,7 +187,6 @@
                             <td><?= htmlspecialchars($row['nama_gudang']); ?></td>
                             <td><?= htmlspecialchars($row['alamat_gudang']); ?></td>
                             <td><?= htmlspecialchars($row['keterangan']); ?></td>
-                            <td><?= htmlspecialchars($row['nama_perusahaan']); ?></td>
                             <td>
                                 <!-- Tombol edit dengan data attribute -->
                                 <button class="btn btn-warning btn-edit" 
@@ -171,6 +213,108 @@ $(document).ready(function() {
 });
 </script>
 
+<!-- Modal Edit Perusahaan -->
+<div class="modal fade" id="editPerusahaanModal" tabindex="-1" role="dialog" aria-labelledby="editPerusahaanModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="editPerusahaanModalLabel">Edit Profil Perusahaan</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="formEditPerusahaan" method="POST" action="pages/profil/proses_edit_perusahaan.php">
+                <div class="modal-body">
+                    <!-- NIB -->
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">NIB</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" name="nib" value="<?php echo $perusahaan['nib']; ?>" disabled>
+                        </div>
+                    </div>
+
+                    <!-- Nama Perusahaan -->
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Nama Perusahaan <span class="text-danger">*</span></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" name="nama_perusahaan" value="<?php echo $perusahaan['nama_perusahaan']; ?>" required>
+                        </div>
+                    </div>
+
+                    <!-- Alamat Perusahaan -->
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Alamat <span class="text-danger">*</span></label>
+                        <div class="col-sm-9">
+                            <textarea class="form-control" name="alamat_perusahaan" rows="2" required><?php echo $perusahaan['alamat_perusahaan'] ?></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Penanggung Jawab -->
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Penanggung Jawab <span class="text-danger">*</span></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" name="nama_pic" value="<?php echo $perusahaan['nama_pic']; ?>" required>
+                        </div>
+                    </div>
+
+                    <!-- Kontak -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-4 col-form-label">No. HP <span class="text-danger">*</span></label>
+                                <div class="col-sm-8">
+                                    <input type="tel" class="form-control" name="no_wa_pic" value="<?php echo $perusahaan['no_wa_pic']; ?>" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-4 col-form-label">Email <span class="text-danger">*</span></label>
+                                <div class="col-sm-8">
+                                    <input type="email" class="form-control" name="email" value="<?php echo $perusahaan['email']; ?>" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                    <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+// Script untuk handle form submit dengan AJAX
+$(document).ready(function() {
+    $('#formEditPerusahaan').submit(function(e) {
+        e.preventDefault();
+        
+        $.ajax({
+            type: 'POST',
+            url: 'pages/profil/proses_edit_perusahaan.php',
+            data: $(this).serialize(),
+            dataType: 'json', // <- tambahkan ini
+            success: function(response) {
+                // Tidak perlu JSON.parse()
+                if(response.status === 'success') {
+                    window.location.reload();
+                } else {
+                    alert('Error: ' + response.message);
+                }
+            },
+            error: function(xhr) {
+                alert('Terjadi kesalahan: ' + xhr.statusText);
+            }
+        });
+
+    });
+});
+</script>
 
 
 <!-- Modal Edit -->

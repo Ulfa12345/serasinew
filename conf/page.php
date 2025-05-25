@@ -10,6 +10,14 @@ switch ($page) {
     include "pages/profil/datagudang.php";
     break;
 
+// Dokumen
+  case 'formupload':
+    include "pages/dokumen/formupload.php";
+    break;
+  case 'datagudang':
+    include "pages/dokumen/datadokumen.php";
+    break;
+
 //Komoditi Pangan
   case '2121':
     include "pages/komoditi/pangan/data_pangan.php";

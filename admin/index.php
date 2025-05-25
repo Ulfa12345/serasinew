@@ -67,7 +67,9 @@ if (isset($_SESSION['id_perusahaan'])) {
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">-->
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
+  
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
 </head>
 
@@ -115,7 +117,7 @@ if (isset($_SESSION['id_perusahaan'])) {
             <h6 class="collapse-header">Data Pengguna :</h6>
             <a class="collapse-item" href="./index.php?page=profil">Form Lengkapi Data</a>
             <a class="collapse-item" href="./index.php?page=datagudang">Data Perusahaan</a>
-            </div>
+          </div>
         </div>
       </li>
 
@@ -128,13 +130,8 @@ if (isset($_SESSION['id_perusahaan'])) {
         <div id="collapseMoney" class="collapse" aria-labelledby="headingMoney" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">List Dokumen Terdaftar :</h6>
-            <?php
-              include "../conf/conn.php";
-              $dok = $conn -> query("SELECT * FROM tb_perusahaan WHERE id_perusahaan = '".$_SESSION['id_perusahaan']."'");
-              //while($currentkom = mysqli_fetch_array($komoditi)){
-            ?>
-            <a class="collapse-item" href="./index.php?page=<?php echo $currentkom['id_perusahaan']; ?>"><?php echo $currentkom['nama_perusahaan']; ?></a>
-            <?php // } ?>
+            <a class="collapse-item" href="./index.php?page=formupload">Form Upload Dokumen</a>
+            <a class="collapse-item" href="./index.php?page=datagudang">Data Dokumen</a>
           </div>
         </div>
       </li>

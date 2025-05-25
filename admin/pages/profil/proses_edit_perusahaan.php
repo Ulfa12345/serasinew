@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once '../../conf/conn.php'; // Sesuaikan path
+include "../../../conf/conn.php"; // Sesuaikan path
 
 header('Content-Type: application/json');
 
@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $data = [
             'nama_perusahaan' => $_POST['nama_perusahaan'],
             'alamat_perusahaan' => $_POST['alamat_perusahaan'],
-            'penanggung_jawab' => $_POST['penanggung_jawab'],
+            'nama_pic' => $_POST['nama_pic'],
             'no_wa_pic' => $_POST['no_wa_pic'],
             'email' => $_POST['email']
         ];
@@ -34,8 +34,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bind_param("sssssi",
             $data['nama_perusahaan'],
             $data['alamat_perusahaan'],
-            $data['penanggung_jawab'],
-            $data['no_hp'],
+            $data['nama_pic'],
+            $data['no_wa_pic'],
             $data['email'],
             $_SESSION['id_perusahaan']
         );
