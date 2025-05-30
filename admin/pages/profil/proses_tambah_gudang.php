@@ -22,7 +22,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         // Konfigurasi upload file
-        $targetDir = __DIR__ . 'pages/upload/nib/';
+        //$targetDir = __DIR__ . 'pages/upload/nib/';
+        $targetDir = $_SERVER['DOCUMENT_ROOT'] . '/serasinew/admin/upload/nib/'; // Simpan di luar folder pages
         $allowedTypes = ['pdf', 'jpg', 'png'];
         $maxSize = 100 * 1024 * 1024; // 10MB
 

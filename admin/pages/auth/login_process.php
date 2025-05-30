@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	if ($gudangResult && $gudangResult->num_rows > 0) {
 		echo '<script>window.location.href="../../index.php";</script>';
 	} else {
-		echo '<script>alert("Data Anda belum lengkap. Silahkan lengkapi data terlebih dahulu."); window.location.href="../../index.php?page=profil";</script>';
+		echo '<script>alert("Data Anda belum lengkap. Silahkan lengkapi data terlebih dahulu."); window.location.href="../../index.php?page=lengkapidata";</script>';
 	}
 
 	// if ($row['id_gudang'] == '0' || empty($row['id_gudang'])) {

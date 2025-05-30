@@ -1,110 +1,137 @@
-<div class="container-fluid">
-    <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-success">
-                <i class="fa fa-warehouse"></i> Form Pengajuan Dokumen
-            </h6>
-        </div>
-        <div class="card-body">
-            <form id="formPengajuanDokumen" method="POST" action="pages/dokumen/proses_upload.php" enctype="multipart/form-data">
-                <div class="row mb-3">
-                    <div class="col-md-6">
-                        <label for="jenis_pengajuan" class="form-label">Jenis Pengajuan</label>
-                        <select class="form-control" id="jenis_pengajuan" name="jenis_pengajuan" required>
-                            <option value="" selected disabled>Pilih jenis pengajuan</option>
-                            <option value="Permohonan Baru">Permohonan Baru</option>
-                            <option value="Perubahan Denah">Perubahan Denah</option>
-                        </select>
-                    </div>
-                </div>
+<?php
+$id_perusahaan = $_SESSION['id_perusahaan'] ?? null;
 
-                <div class="row" id="uploadFields">
-                    <div class="col-md-6 mb-3 upload-field" id="field_sipa">
-                        <label class="form-label">Upload SIPA</label> ||
-                        <a href="contoh/contoh_nib.pdf" target="_blank">Contoh Download Disini</a>
-                        <input type="file" class="form-control" name="upload_sipa" accept=".pdf,.jpg,.png">
-                    </div>
+if (!$id_perusahaan) {
+    die("Anda harus login terlebih dahulu.");
+}
 
-                    <div class="col-md-6 mb-3 upload-field" id="field_ijin_pbf">
-                        <label class="form-label">Upload Izin PBF</label> ||
-                        <a href="contoh/contoh_nib.pdf" target="_blank">Contoh Download Disini</a>
-                        <input type="file" class="form-control" name="upload_ijin_pbf" accept=".pdf,.jpg,.png">
-                    </div>
+// Ambil data pengajuan
+$sql = "SELECT * FROM tb_dokumen WHERE id_perusahaan = ? ORDER BY tanggal_pengajuan DESC";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $id_perusahaan);
+$stmt->execute();
+$result = $stmt->get_result();
+$dok = $result->fetch_assoc();
+$stmt->close();
 
-                    <div class="col-md-6 mb-3 upload-field" id="field_permohonan">
-                        <label class="form-label">Upload Surat Permohonan</label> ||
-                        <a href="contoh/contoh_nib.pdf" target="_blank">Contoh Download Disini</a>
-                        <input type="file" class="form-control" name="upload_suratpermohonan" accept=".pdf,.jpg,.png">
+//$server_path_denah = $_SERVER['DOCUMENT_ROOT'] . '/serasinew/admin/pages/dokumen/uploads/' . basename($dok['upload_denahbaru']);
+//$web_path_denah = '/serasinew/admin/pages/dokumen/uploads/' . basename($dok['upload_denahbaru']);
+                        
+?>
+    <div class="container-fluid">
+    
+    <h3 class="mb-4">Form Pengajuan Dokumen dan Denah</h3>
+    <div class="card shadow-lg"> 
+            <div class="card-body">
+                <form method="POST" enctype="multipart/form-data" action="pages/dokumen/proses_upload_dok.php">
+                    <!-- Jenis Pengajuan -->
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Jenis Pengajuan <span class="text-danger">*</span></label>
+                                <select class="form-control" id="jenis_pengajuan" name="jenis_pengajuan" required>
+                                    <option value="" selected disabled>Pilih jenis pengajuan</option>
+                                    <option value="Permohonan Baru">Permohonan Baru</option>
+                                    <option value="Perubahan Denah">Perubahan Denah</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
-
-                    <div class="col-md-6 mb-3 upload-field" id="field_denah_baru">
-                        <label class="form-label">Upload Denah Baru</label> ||
-                        <a href="contoh/contoh_nib.pdf" target="_blank">Contoh Download Disini</a>
-                        <input type="file" class="form-control" name="upload_denahbaru" accept=".pdf,.jpg,.png">
-                    </div>
-
-                    <div class="col-md-6 mb-3 upload-field" id="field_pernyataan">
-                        <label class="form-label">Upload Surat Pernyataan</label> ||
-                        <a href="contoh/contoh_nib.pdf" target="_blank">Contoh Download Disini</a>
-                        <input type="file" class="form-control" name="upload_suratpernyataan" accept=".pdf,.jpg,.png">
-                    </div>
-
-                    <div class="col-md-6 mb-3 upload-field" id="field_denah_lama">
-                        <label class="form-label">Upload Denah Lama</label> ||
-                        <a href="contoh/contoh_nib.pdf" target="_blank">Contoh Download Disini</a>
-                        <input type="file" class="form-control" name="upload_denahlama" accept=".pdf,.jpg,.png">
-                    </div>
-
                     
-                </div>
-
-                <div class="text-end">
-                    <button type="submit" class="btn btn-primary">Kirim</button>
-                </div>
-            </form>
+                    <!-- Info Boxes -->
+                    <div class="alert alert-info mb-4" id="infoPermohonanBaru" style="display: none;">
+                        <i class="fas fa-info-circle me-2"></i>
+                        <strong>Permohonan Baru:</strong> Mengajukan denah baru untuk pertama kali
+                    </div> 
+                    
+                    <div class="alert alert-info mb-4" id="infoPerubahanDenah" style="display: none;">
+                        <i class="fas fa-info-circle me-2"></i>
+                        <strong>Perubahan Denah:</strong> 
+                        Sistem akan otomatis menyimpan denah sebelumnya sebagai denah lama
+                    </div>
+                    
+                    <!-- Dokumen Wajib -->
+                    <div class="mb-4">
+                        <h5 class="mb-3 pb-2 border-bottom"><i class="fas fa-file-alt me-2 text-primary"></i>Upload Dokumen </h5>
+                        
+                        <div class="mb-3 border rounded p-3 bg-light">
+                            <label class="form-label fw-medium">SIPA</label>
+                            <input type="file" class="form-control" name="upload_sipa" accept=".pdf,.jpg,.png" required>
+                            <div class="form-text">Format: PDF, JPG, atau PNG (maks. 5MB)</div>
+                        </div>
+                        
+                        <div class="mb-3 border rounded p-3 bg-light">
+                            <label class="form-label fw-medium">Izin PBF</label>
+                            <input type="file" class="form-control" name="upload_ijin_pbf" accept=".pdf,.jpg,.png" required>
+                            <div class="form-text">Format: PDF, JPG, atau PNG (maks. 5MB)</div>
+                        </div>
+                        
+                        <div class="mb-3 border rounded p-3 bg-light">
+                            <label class="form-label fw-medium">Surat Permohonan</label>
+                            <input type="file" class="form-control" name="upload_suratpermohonan" accept=".pdf,.jpg,.png" required>
+                            <div class="form-text">Format: PDF, JPG, atau PNG (maks. 5MB)</div>
+                        </div>
+                        
+                        <div class="mb-3 border rounded p-3 bg-light">
+                            <label class="form-label fw-medium">Surat Pernyataan</label>
+                            <input type="file" class="form-control" name="upload_suratpernyataan" accept=".pdf,.jpg,.png" required>
+                            <div class="form-text">Format: PDF, JPG, atau PNG (maks. 5MB)</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Upload Denah -->
+                    <div class="mb-4">
+                        <h5 class="mb-3 pb-2 border-bottom"><i class="fas fa-map me-2 text-primary"></i>Upload Denah</h5>
+                        
+                        <div class="mb-3 border rounded p-3 bg-light">
+                            <label class="form-label fw-medium" id="denahLabel">Upload Denah Baru</label>
+                            <input type="file" class="form-control" name="upload_denahbaru" accept=".jpg,.png" required>
+                            <div class="form-text mt-2">
+                                <span id="denahInfo">Denah untuk lokasi baru</span> | Format: JPG atau PNG (maks. 5MB)
+                            </div>
+                        </div>
+                        
+                        <div class="alert alert-warning" id="denahLamaInfo" style="display: none;">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            Denah lama akan otomatis diambil dari pengajuan terakhir
+                        </div>
+                    </div>
+                    
+                    <!-- Tombol Submit -->
+                    <div class="d-grid mt-12">
+                        <button type="submit" class="btn btn-success btn-lg">
+                            <i class="fas fa-paper-plane me-2"></i>Kirim Pengajuan
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
+    </div>
 
-<!-- SCRIPT UNTUK MENAMPILKAN FIELD BERDASARKAN PILIHAN -->
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
+    <script>
+        // Tampilkan info berdasarkan jenis pengajuan
         const jenisPengajuan = document.getElementById('jenis_pengajuan');
-        const fields = {
-            sipa: document.getElementById('field_sipa'),
-            ijin_pbf: document.getElementById('field_ijin_pbf'),
-            permohonan: document.getElementById('field_permohonan'),
-            pernyataan: document.getElementById('field_pernyataan'),
-            denah_lama: document.getElementById('field_denah_lama'),
-            denah_baru: document.getElementById('field_denah_baru')
-        };
-
-        function hideAllFields() {
-            Object.values(fields).forEach(field => field.style.display = 'none');
-        }
-
-        function showFieldsFor(value) {
-            hideAllFields();
-            if (value === 'Perubahan Denah') {
-                fields.sipa.style.display = 'block';
-                fields.ijin_pbf.style.display = 'block';
-                fields.permohonan.style.display = 'block';
-                fields.pernyataan.style.display = 'block';
-                fields.denah_baru.style.display = 'block';
-                fields.denah_lama.style.display = 'block';
-            } else if (value === 'Permohonan Baru') {
-                fields.sipa.style.display = 'block';
-                fields.ijin_pbf.style.display = 'block';
-                fields.permohonan.style.display = 'block';
-                fields.pernyataan.style.display = 'block';
-                fields.denah_baru.style.display = 'block';
+        const infoPermohonanBaru = document.getElementById('infoPermohonanBaru');
+        const infoPerubahanDenah = document.getElementById('infoPerubahanDenah');
+        const denahLamaInfo = document.getElementById('denahLamaInfo');
+        const denahLabel = document.getElementById('denahLabel');
+        const denahInfo = document.getElementById('denahInfo');
+        
+        jenisPengajuan.addEventListener('change', function() {
+            if (this.value === 'Permohonan Baru') {
+                infoPermohonanBaru.style.display = 'none';
+                infoPerubahanDenah.style.display = 'none';
+                denahLamaInfo.style.display = 'none';
+                denahLabel.textContent = 'Upload Denah Baru';
+                denahInfo.textContent = 'Denah untuk lokasi baru';
+            } 
+            else if (this.value === 'Perubahan Denah') {
+                infoPermohonanBaru.style.display = 'none';
+                infoPerubahanDenah.style.display = 'block';
+                denahLamaInfo.style.display = 'block';
+                denahLabel.textContent = 'Upload Denah Baru (Perubahan)';
+                denahInfo.textContent = 'Denah baru setelah perubahan';
             }
-        }
-
-        jenisPengajuan.addEventListener('change', function () {
-            showFieldsFor(this.value);
         });
-
-        hideAllFields(); // Inisialisasi dengan menyembunyikan semua
-    });
-</script>
+    </script>
