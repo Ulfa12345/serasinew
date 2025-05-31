@@ -32,23 +32,23 @@ $result = $stmt->get_result();
                     $no = 1; 
                     while ($row = $result->fetch_assoc()): 
                         // Ambil path file untuk setiap row
-                        $server_path_sipa = $_SERVER['DOCUMENT_ROOT'] . '/serasi/admin/pages/dokumen/uploads/' . basename($row['upload_sipa']);
-                        $web_path_sipa = '/serasi/admin/pages/dokumen/uploads/' . basename($row['upload_sipa']);
+                        $server_path_sipa = $_SERVER['DOCUMENT_ROOT'] . '/serasi/user/pages/dokumen/uploads/' . basename($row['upload_sipa']);
+                        $web_path_sipa = '/serasi/user/pages/dokumen/uploads/' . basename($row['upload_sipa']);
 
-                        $server_path_sph = $_SERVER['DOCUMENT_ROOT'] . '/serasi/admin/pages/dokumen/uploads/' . basename($row['upload_suratpermohonan']);
-                        $web_path_sph = '/serasi/admin/pages/dokumen/uploads/' . basename($row['upload_suratpermohonan']);
+                        $server_path_sph = $_SERVER['DOCUMENT_ROOT'] . '/serasi/user/pages/dokumen/uploads/' . basename($row['upload_suratpermohonan']);
+                        $web_path_sph = '/serasi/user/pages/dokumen/uploads/' . basename($row['upload_suratpermohonan']);
 
-                        $server_path_spn = $_SERVER['DOCUMENT_ROOT'] . '/serasi/admin/pages/dokumen/uploads/' . basename($row['upload_suratpernyataan']);
-                        $web_path_spn = '/serasi/admin/pages/dokumen/uploads/' . basename($row['upload_suratpernyataan']);
+                        $server_path_spn = $_SERVER['DOCUMENT_ROOT'] . '/serasi/user/pages/dokumen/uploads/' . basename($row['upload_suratpernyataan']);
+                        $web_path_spn = '/serasi/user/pages/dokumen/uploads/' . basename($row['upload_suratpernyataan']);
 
-                        $server_path_pbf = $_SERVER['DOCUMENT_ROOT'] . '/serasi/admin/pages/dokumen/uploads/' . basename($row['upload_ijin_pbf']);
-                        $web_path_pbf = '/serasi/admin/pages/dokumen/uploads/' . basename($row['upload_ijin_pbf']);
+                        $server_path_pbf = $_SERVER['DOCUMENT_ROOT'] . '/serasi/user/pages/dokumen/uploads/' . basename($row['upload_ijin_pbf']);
+                        $web_path_pbf = '/serasi/user/pages/dokumen/uploads/' . basename($row['upload_ijin_pbf']);
 
-                        $server_path_dnhlma = $_SERVER['DOCUMENT_ROOT'] . '/serasi/admin/pages/dokumen/uploads/' . basename($row['upload_denahlama']);
-                        $web_path_dnhlma = '/serasi/admin/pages/dokumen/uploads/' . basename($row['upload_denahlama']);
+                        $server_path_dnhlma = $_SERVER['DOCUMENT_ROOT'] . '/serasi/user/pages/dokumen/uploads/' . basename($row['upload_denahlama']);
+                        $web_path_dnhlma = '/serasi/user/pages/dokumen/uploads/' . basename($row['upload_denahlama']);
 
-                        $server_path_dnhbru = $_SERVER['DOCUMENT_ROOT'] . '/serasi/admin/pages/dokumen/uploads/' . basename($row['upload_denahbaru']);
-                        $web_path_dnhbru = '/serasi/admin/pages/dokumen/uploads/' . basename($row['upload_denahbaru']);
+                        $server_path_dnhbru = $_SERVER['DOCUMENT_ROOT'] . '/serasi/user/pages/dokumen/uploads/' . basename($row['upload_denahbaru']);
+                        $web_path_dnhbru = '/serasi/user/pages/dokumen/uploads/' . basename($row['upload_denahbaru']);
                         
                     ?>
                         <tr>
