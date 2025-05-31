@@ -43,8 +43,8 @@
                                         $file_ext = pathinfo($perusahaan['upload_nib'], PATHINFO_EXTENSION);
 
                                         // Path yang benar sesuai struktur folder
-                                        $server_path = $_SERVER['DOCUMENT_ROOT'] . '/serasinew/admin/upload/nib/' . basename($perusahaan['upload_nib']);
-                                        $web_path = '/serasinew/admin/upload/nib/' . basename($perusahaan['upload_nib']);
+                                        $server_path = $_SERVER['DOCUMENT_ROOT'] . '/serasi/admin/upload/nib/' . basename($perusahaan['upload_nib']);
+                                        $web_path = '/serasi/admin/upload/nib/' . basename($perusahaan['upload_nib']);
 
                                         if (file_exists($server_path)): ?>
                                             <?php if (in_array($file_ext, ['jpg', 'jpeg', 'png'])): ?>
