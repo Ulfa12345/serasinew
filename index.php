@@ -103,7 +103,7 @@ include "conf/conn.php";
 							</div>
 							<div class="col-lg-2 col-12">
 								<div class="get-quote">
-									<a href="admin/signup.php" class="btn">DAFTAR AKUN PBF</a>
+									<a href="user/signup.php" class="btn">DAFTAR AKUN PBF</a>
 								</div>
 							</div>
 						</div>
