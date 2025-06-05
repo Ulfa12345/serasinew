@@ -11,6 +11,10 @@ if (isset($_GET['pageadmin'])) {
             include "hal/data_pengajuan.php";
             break;
 
+        case 'detail_perusahaan':
+            include "hal/detail_perusahaan.php";
+            break;
+
         default:
             echo "<h4>Halaman tidak ditemukan.</h4>";
             break;

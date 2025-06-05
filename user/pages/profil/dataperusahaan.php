@@ -186,7 +186,7 @@
                                 <td><?= htmlspecialchars($row['keterangan']); ?></td>
                                 <td>
                                     <!-- Tombol edit dengan data attribute -->
-                                    <button class="btn btn-warning btn-edit"
+                                    <button class="btn btn-primary btn-edit"
                                         data-id="<?= $row['id_gudang'] ?>"
                                         data-nama="<?= htmlspecialchars($row['nama_gudang']) ?>"
                                         data-alamat="<?= htmlspecialchars($row['alamat_gudang']) ?>"
@@ -289,7 +289,7 @@
             <div class="modal-content">
                 <div class="modal-header bg-warning text-white">
                     <h5 class="modal-title" id="editModalLabel">Edit Data Gudang</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -313,7 +313,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
                         <button type="submit" class="btn btn-warning">Simpan Perubahan</button>
                     </div>
                 </form>
@@ -427,7 +427,7 @@
                     }
                 },
                 error: function(xhr) {
-                   const message = xhr.responseJSON?.message || 'Terjadi kesalahan saat mengirim data';
+                    const message = xhr.responseJSON?.message || 'Terjadi kesalahan saat mengirim data';
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
@@ -439,7 +439,7 @@
     });
 
 
-    // Script untuk menangani modal edit
+    // Script untuk menangani modal edit Gudang
     document.addEventListener('DOMContentLoaded', function() {
         // Tangkap semua tombol edit
         document.querySelectorAll('.btn-edit').forEach(button => {

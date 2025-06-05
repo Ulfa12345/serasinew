@@ -1,64 +1,72 @@
 <?php
 session_start();
+header('Content-Type: application/json');
 include "../../../conf/conn.php";
 
+$response = ['success' => false, 'message' => '', 'redirect' => ''];
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-	$username = $conn->real_escape_string($_POST['nib']);
-	$password = $_POST['password'];
+    // Validate inputs
+    if (empty($_POST['nib']) || empty($_POST['password'])) {
+        $response['message'] = 'NIB dan Password tidak boleh kosong!';
+        echo json_encode($response);
+        exit;
+    }
 
-	// Cek apakah field kosong
-	if (empty($username) || empty($password)) {
-		echo '<script>alert("NIB dan Password tidak boleh kosong!"); window.location.href="../../login.php";</script>';
-		exit;
-	}
+    $username = $conn->real_escape_string($_POST['nib']);
+    $password = $_POST['password'];
 
-	// Query untuk ambil data perusahaan dan gudang
-	// $query =  "SELECT * FROM tb_perusahaan 
-	//           LEFT JOIN tb_gudang ON tb_perusahaan.id_perusahaan = tb_gudang.id_perusahaan
-	//           WHERE tb_perusahaan.nib = '$username'";
-	$query = "SELECT * FROM tb_perusahaan WHERE nib = '$username' LIMIT 1";
-	$result = $conn->query($query);
+    // Prepare statement for better security
+    $stmt = $conn->prepare("SELECT * FROM tb_perusahaan WHERE nib = ? LIMIT 1");
+    if (!$stmt) {
+        $response['message'] = 'Terjadi kesalahan sistem (SQL prepare failed)';
+        echo json_encode($response);
+        exit;
+    }
 
-	if (!$result || $result->num_rows === 0) {
-		echo '<script>alert("Terjadi kesalahan saat mengakses database!"); window.location.href="../../login.php";</script>';
-		exit;
-	}
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-	// ...
-	// if ($result->num_rows === 1) {
-	$row = $result->fetch_assoc();
+    if ($result->num_rows === 0) {
+        $response['message'] = 'NIB tidak terdaftar atau password salah!';
+        echo json_encode($response);
+        exit;
+    }
 
-	if (!password_verify($password, $row['password'])) {
-		//die(var_dump($query));
-		echo '<script>alert("Password salah!"); window.location.href="../../login.php";</script>';
-		exit;
-	}
+    $row = $result->fetch_assoc();
 
-	$_SESSION['id_perusahaan'] = $row['id_perusahaan'];
-	$_SESSION['nib'] = $row['nib'];
-	$_SESSION['nama_perusahaan'] = $row['nama_perusahaan'];
+    if (!password_verify($password, $row['password'])) {
+        $response['message'] = 'NIB tidak terdaftar atau password salah!';
+        echo json_encode($response);
+        exit;
+    }
 
-	$id_perusahaan = $row['id_perusahaan'];
-	$gudangQuery = "SELECT * FROM tb_gudang WHERE id_perusahaan = '$id_perusahaan' LIMIT 1";
-	$gudangResult = $conn->query($gudangQuery);
+    // Set session variables
+    $_SESSION['id_perusahaan'] = $row['id_perusahaan'];
+    $_SESSION['nib'] = $row['nib'];
+    $_SESSION['nama_perusahaan'] = $row['nama_perusahaan'];
+    $_SESSION['logged_in'] = true;
 
-	if ($gudangResult && $gudangResult->num_rows > 0) {
-		echo '<script>window.location.href="../../index.php";</script>';
-	} else {
-		echo '<script>alert("Data Anda belum lengkap. Silahkan lengkapi data terlebih dahulu."); window.location.href="../../index.php?page=lengkapidata";</script>';
-	}
+    // Check for warehouse data
+    $id_perusahaan = $row['id_perusahaan'];
+    $gudangStmt = $conn->prepare("SELECT * FROM tb_gudang WHERE id_perusahaan = ? LIMIT 1");
+    $gudangStmt->bind_param("i", $id_perusahaan);
+    $gudangStmt->execute();
+    $gudangResult = $gudangStmt->get_result();
 
-	// if ($row['id_gudang'] == '0' || empty($row['id_gudang'])) {
-	//     echo '<script>alert("Data Anda belum lengkap. Silahkan lengkapi data terlebih dahulu."); window.location.href="../../index.php?page=profil";</script>';
-	// } else {
-	//     echo '<script>window.location.href="../../index.php";</script>';
-	// }
-	// } else {
-	//     echo '<script>alert("Password salah!"); window.location.href="../../login.php";</script>';
-	// }
+    if ($gudangResult->num_rows > 0) {
+        $response['success'] = true;
+    } else {
+        $response['success'] = true;
+        $response['redirect'] = 'index.php?page=lengkapidata';
+        $response['message'] = 'Data Anda belum lengkap. Silahkan lengkapi data terlebih dahulu.';
+    }
 
-	//   } else {
-	//         //die(var_dump($query));
-	//         echo '<script>alert("NIB tidak ditemukan!"); window.location.href="../../login.php";</script>';
-	//     }
+    echo json_encode($response);
+    exit;
+} else {
+    $response['message'] = 'Metode request tidak valid';
+    echo json_encode($response);
+    exit;
 }

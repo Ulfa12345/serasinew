@@ -3,13 +3,13 @@ session_start();
 
 $timeout = 18000; // Number of seconds until it times out.
 //$logout_redirect = 'login.php';
- 
+
 // Check if the timeout field exists.
-if(isset($_SESSION['timeout'])) {
+if (isset($_SESSION['timeout'])) {
     // See if the number of seconds since the last
     // visit is larger than the timeout period.
     $duration = time() - (int)$_SESSION['timeout'];
-    if($duration > $timeout) {
+    if ($duration > $timeout) {
 
         // remove all session variables
         session_unset();
@@ -19,7 +19,7 @@ if(isset($_SESSION['timeout'])) {
         // session_start();
     }
 }
-$_SESSION['start_session']=time();
+$_SESSION['start_session'] = time();
 // Update the timout field with the current time.
 $_SESSION['timeout'] = time();
 
@@ -29,14 +29,14 @@ include "../conf/conn.php";
 $admin = [];
 if (isset($_SESSION['id_admin'])) {
     $id_adm = $_SESSION['id_admin'];
-    
+
     $stmt = $conn->prepare("SELECT * FROM tb_admin WHERE id_admin = ?");
     $stmt->bind_param("i", $id_adm); // Gunakan $id_adm, bukan $id_admin
     $stmt->execute();
-    
+
     $result = $stmt->get_result();
     $admin = $result->fetch_assoc();
-    
+
     $stmt->close();
 } else {
     // Optional: redirect atau tampilkan pesan error
@@ -68,6 +68,45 @@ if (isset($_SESSION['id_admin'])) {
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+    <!-- CSS -->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="vendor/datatables/dataTables.bootstrap4.min.css"> -->
+
+    <!-- jQuery & Bootstrap -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- DataTables -->
+    <!-- <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script> -->
+
+
+
+    <!-- Plugin tambahan (jika dipakai) -->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="js/sb-admin-2.min.js"></script>
+
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.all.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.min.css" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/ajax@0.0.4/lib/ajax.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="vendor/chart.js/Chart.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="js/demo/chart-area-demo.js"></script>
+    <script src="js/demo/chart-pie-demo.js"></script>
+
 
 </head>
 
@@ -163,7 +202,7 @@ if (isset($_SESSION['id_admin'])) {
                 </div>
             </li>
 
-            
+
         </ul>
         <!-- End of Sidebar -->
 
@@ -376,75 +415,60 @@ if (isset($_SESSION['id_admin'])) {
 
                 </nav>
                 <!-- End of Topbar -->
-                 <?php include "../conf/pageadmin.php"; ?>
+                <?php include "../conf/pageadmin.php"; ?>
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
-                    
+
 
                 </div>
                 <!-- /.container-fluid -->
 
-            <!-- End of Main Content -->
+                <!-- End of Main Content -->
 
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2021</span>
+                <!-- Footer -->
+                <footer class="sticky-footer bg-white">
+                    <div class="container my-auto">
+                        <div class="copyright text-center my-auto">
+                            <span>Copyright &copy; Your Website 2021</span>
+                        </div>
                     </div>
-                </div>
-            </footer>
-            <!-- End of Footer -->
+                </footer>
+                <!-- End of Footer -->
+
+            </div>
+            <!-- End of Content Wrapper -->
 
         </div>
-        <!-- End of Content Wrapper -->
+        <!-- End of Page Wrapper -->
 
-    </div>
-    <!-- End of Page Wrapper -->
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
 
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
-
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+        <!-- Logout Modal-->
+        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                        <a class="btn btn-primary" href="login.php">Logout</a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
-
-    <!-- Page level plugins -->
-    <script src="vendor/chart.js/Chart.min.js"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="js/demo/chart-area-demo.js"></script>
-    <script src="js/demo/chart-pie-demo.js"></script>
 
 </body>
 

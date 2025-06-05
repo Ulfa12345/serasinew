@@ -94,8 +94,8 @@ include "conf/conn.php";
 										<ul class="nav menu">
 											<li class="active"><a href="index.html">Home</a>
 											</li>
-											<li><a href="#">Informasi </a></li>
-											<li><a href="#">Registrasi </a></li>
+											<li><a href="user/login.php">Login </a></li>
+											<li><a href="user/signup.php">Registrasi </a></li>
 										</ul>
 									</nav>
 								</div>
@@ -118,16 +118,16 @@ include "conf/conn.php";
 		<section class="slider">
 			<div class="hero-slider">
 				<!-- Start Single Slider -->
-				<div class="single-slider" style="background-image:url('img/slider2.jpg')">
+				<div class="single-slider" style="background-image:url('img/slider.jpg')">
 					<div class="container">
 						<div class="row">
 							<div class="col-lg-7">
 								<div class="text">
-									<h1>We Provide <span>Medical</span> Services That You Can <span>Trust!</span></h1>
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sed nisl pellentesque, faucibus libero eu, gravida quam. </p>
+									<!--<h1>We Provide <span>Medical</span> Services That You Can <span>Trust!</span></h1>
+									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sed nisl pellentesque, faucibus libero eu, gravida quam. </p>-->
 									<div class="button">
-										<a href="#" class="btn">REGISTER</a>
-										<a href="#" class="btn primary">Learn More</a>
+										<!--<a href="#" class="btn">REGISTER</a>
+										<a href="#" class="btn primary">Learn More</a>-->
 									</div>
 								</div>
 							</div>
@@ -136,15 +136,15 @@ include "conf/conn.php";
 				</div>
 				<!-- End Single Slider -->
 				<!-- Start Single Slider -->
-				<div class="single-slider" style="background-image:url('img/slider.jpg')">
+				<div class="single-slider" style="background-image:url('img/slider1.jpg')">
 					<div class="container">
 						<div class="row">
 							<div class="col-lg-7">
 								<div class="text">
-									<h1>We Provide <span>Medical</span> Services That You Can <span>Trust!</span></h1>
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sed nisl pellentesque, faucibus libero eu, gravida quam. </p>
+									<h1>Kini semakin mudah <span>Pendaftaran Konsultasi Denah PBF <span></h1>
+									<p>Yuks daftarkan segera, klik link dibawah ini </p>
 									<div class="button">
-										<a href="#" class="btn">Get Appointment</a>
+										<a href="user/signup.php" class="btn">Pendaftaran</a>
 										<a href="#" class="btn primary">About Us</a>
 									</div>
 								</div>
@@ -154,22 +154,6 @@ include "conf/conn.php";
 				</div>
 				<!-- Start End Slider -->
 				<!-- Start Single Slider -->
-				<div class="single-slider" style="background-image:url('img/slider3.jpg')">
-					<div class="container">
-						<div class="row">
-							<div class="col-lg-7">
-								<div class="text">
-									<h1>We Provide <span>Medical</span> Services That You Can <span>Trust!</span></h1>
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sed nisl pellentesque, faucibus libero eu, gravida quam. </p>
-									<div class="button">
-										<a href="#" class="btn">Get Appointment</a>
-										<a href="#" class="btn primary">Conatct Now</a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
 				<!--End Single Slider -->
 			</div>
 		</section>
@@ -211,68 +195,50 @@ include "conf/conn.php";
 			<div class="footer-top">
 				<div class="container">
 					<div class="row">
-						<div class="col-lg-3 col-md-6 col-12">
+						<div class="col-lg-4 col-md-6 col-12">
 							<div class="single-footer">
 								<h2>About Us</h2>
-								<p>Lorem ipsum dolor sit am consectetur adipisicing elit do eiusmod tempor incididunt ut labore dolore magna.</p>
+								<p> SERASI merupakan aplikasi berbasis website untuk Pengajuan Denah PBF (Pedagang Besar Farmasi) di Balai Besar POM di Surabaya</p>
 								<!-- Social -->
 								<ul class="social">
-									<li><a href="#"><i class="icofont-facebook"></i></a></li>
-									<li><a href="#"><i class="icofont-google-plus"></i></a></li>
-									<li><a href="#"><i class="icofont-twitter"></i></a></li>
-									<li><a href="#"><i class="icofont-vimeo"></i></a></li>
-									<li><a href="#"><i class="icofont-pinterest"></i></a></li>
+									<li><a href="https://www.instagram.com/bpom.surabaya/"><i class="icofont-instagram"></i></a></li>
+									<li><a href="https://x.com/BPOM_Surabaya"><i class="icofont-twitter"></i></a></li>
+									<li><a href="https://www.facebook.com/bpom.surabaya"><i class="icofont-facebook"></i></a></li>
 								</ul>
 								<!-- End Social -->
 							</div>
 						</div>
-						<div class="col-lg-3 col-md-6 col-12">
+						<div class="col-lg-4 col-md-6 col-12">
 							<div class="single-footer f-link">
 								<h2>Quick Links</h2>
 								<div class="row">
 									<div class="col-lg-6 col-md-6 col-12">
 										<ul>
-											<li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>Home</a></li>
-											<li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>About Us</a></li>
-											<li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>Services</a></li>
-											<li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>Our Cases</a></li>
-											<li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>Other Links</a></li>	
+											<li><a href="https://surabaya.pom.go.id/"><i class="fa fa-caret-right" aria-hidden="true"></i>Website BBPOM Surabaya</a></li>
+											<li><a href="https://www.pom.go.id/"><i class="fa fa-caret-right" aria-hidden="true"></i>Website BPOM</a></li>
+											<li><a href="https://cekbpom.pom.go.id/"><i class="fa fa-caret-right" aria-hidden="true"></i>Cek POM</a></li>	
 										</ul>
 									</div>
 									<div class="col-lg-6 col-md-6 col-12">
 										<ul>
-											<li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>Consuling</a></li>
-											<li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>Finance</a></li>
-											<li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>Testimonials</a></li>
-											<li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>FAQ</a></li>
-											<li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>Contact Us</a></li>	
+											<li><a href="https://new-aero.pom.go.id/"><i class="fa fa-caret-right" aria-hidden="true"></i>New Aero</a></li>
+											<li><a href="https://e-bpom.pom.go.id/"><i class="fa fa-caret-right" aria-hidden="true"></i>E-BPOM</a></li>
 										</ul>
 									</div>
 								</div>
 							</div>
 						</div>
-						<div class="col-lg-3 col-md-6 col-12">
+						<div class="col-lg-4 col-md-6 col-12">
 							<div class="single-footer">
 								<h2>Open Hours</h2>
-								<p>Lorem ipsum dolor sit ame consectetur adipisicing elit do eiusmod tempor incididunt.</p>
 								<ul class="time-sidual">
-									<li class="day">Monday - Fridayp <span>8.00-20.00</span></li>
-									<li class="day">Saturday <span>9.00-18.30</span></li>
-									<li class="day">Monday - Thusday <span>9.00-15.00</span></li>
+									<li class="day">Senin - Kamis <span> 08.00-16.30</span></li>
+									<li class="day">Jumat <span> 08.00-16.00</span></li>
+									<li class="day">Sabtu - Minggu dan Hari Libur Nasional - Layanan atas Permintaan atau Kasus Khusus</li>
 								</ul>
 							</div>
 						</div>
-						<div class="col-lg-3 col-md-6 col-12">
-							<div class="single-footer">
-								<h2>Newsletter</h2>
-								<p>subscribe to our newsletter to get allour news in your inbox.. Lorem ipsum dolor sit amet, consectetur adipisicing elit,</p>
-								<form action="mail/mail.php" method="get" target="_blank" class="newsletter-inner">
-									<input name="email" placeholder="Email Address" class="common-input" onfocus="this.placeholder = ''"
-										onblur="this.placeholder = 'Your email address'" required="" type="email">
-									<button class="button"><i class="icofont icofont-paper-plane"></i></button>
-								</form>
-							</div>
-						</div>
+						
 					</div>
 				</div>
 			</div>
@@ -283,7 +249,7 @@ include "conf/conn.php";
 					<div class="row">
 						<div class="col-lg-12 col-md-12 col-12">
 							<div class="copyright-content">
-								<p>© Copyright 2018  |  All Rights Reserved by <a href="https://www.wpthemesgrid.com" target="_blank">wpthemesgrid.com</a> </p>
+								<p>© Copyright 2018  |  Tim IT <a href="https://www.wpthemesgrid.com" target="_blank">BBPOM Surabaya</a> </p>
 							</div>
 						</div>
 					</div>
