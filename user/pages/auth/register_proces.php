@@ -46,32 +46,70 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($stmt->execute()) {
             // Kirim WhatsApp
-            $token = "0Twh4hBkcwrMHifcVUuLRzkrcWgvMX87pkncHgiF1kth1VIQ4RcSB5TPVwg8BFXb";
-            $secret_key = ".XOrMxRzX";
-            $auth = "$token.$secret_key";
+            // $token = '0Twh4hBkcwrMHifcVUuLRzkrcWgvMX87pkncHgiF1kth1VIQ4RcSB5TPVwg8BFXb';
+            // $secret_key = '.XOrMxRzX';
+            // $auth = "0Twh4hBkcwrMHifcVUuLRzkrcWgvMX87pkncHgiF1kth1VIQ4RcSB5TPVwg8BFXb.XOrMxRzX";
 
             $waMessage = "Halo $nama, akun Anda berhasil didaftarkan ke sistem SERASI.";
-            $data = [[
-                "phone" => $notelp,
-                "message" => $waMessage,
-                "secret" => false,
-                "priority" => false,
-                "isGroup" => false
-            ]];
+            // $data = [
+            //     "phone" => $notelp,
+            //     "message" => $waMessage,
+            //     "secret" => false,
+            //     "priority" => false,
+            //     "isGroup" => false
+            // ];
 
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, "https://jogja.wablas.com/api/send-message");
-            curl_setopt($ch, CURLOPT_HTTPHEADER, [
-                "Authorization: $auth",
-                "Content-Type: application/json"
+            // $ch = curl_init();
+            // curl_setopt($ch, CURLOPT_URL, "https://jogja.wablas.com/api/send-message");
+            // curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            //     "Authorization: $auth",
+            //     "Content-Type: application/json"
+            // ]);
+            // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            // curl_setopt($ch, CURLOPT_POST, true);
+            // curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+            // curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+            // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+            // $wa_response = curl_exec($ch);
+            // curl_close($ch);
+
+            if (substr($notelp, 0, 1) === '0') {
+                $notelp = substr($notelp, 1);
+            }
+
+            // Tambahkan kode negara (62 untuk Indonesia)
+            $notelp = '62' . $notelp;
+
+            // $curl = curl_init();
+            $token = "0Twh4hBkcwrMHifcVUuLRzkrcWgvMX87pkncHgiF1kth1VIQ4RcSB5TPVwg8BFXb";
+            $secret_key = ".XOrMxRzX";
+            $apiUrl = 'https://jogja.wablas.com/api/send-message';
+            $data = [
+                'phone' => $notelp,
+                'message' => $waMessage,
+                // "secret" => false,
+                // "priority" => true,
+                // "isGroup" => false,
+            ];
+
+
+            $curl = curl_init($apiUrl);
+            curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($curl, CURLOPT_POST, true);
+            curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
+            curl_setopt($curl, CURLOPT_HTTPHEADER, [
+                'Content-Type: application/x-www-form-urlencoded',
+                'Authorization: ' . $token . $secret_key
             ]);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_POST, true);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-            $wa_response = curl_exec($ch);
-            curl_close($ch);
+            // curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+            $result = curl_exec($curl);
+            curl_close($curl);
+            //die(var_dump($result,  $notelp))
+            // echo "<pre>";
+            // print_r($result);
+
+
 
             // Kirim Email
             $mail = new PHPMailer(true);
