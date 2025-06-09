@@ -90,11 +90,11 @@
   <script src="js/sb-admin-2.min.js"></script>
 
   <!-- Swal and ajax-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.all.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.min.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.all.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.min.css" rel="stylesheet">
 
-    <script src="https://cdn.jsdelivr.net/npm/ajax@0.0.4/lib/ajax.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/ajax@0.0.4/lib/ajax.min.js"></script>
   <script>
     //Sweet Alert
     document.getElementById('registrationForm').addEventListener('submit', function(e) {
@@ -119,8 +119,8 @@
             });
           } else {
             Swal.fire({
-              icon: 'error',
-              title: 'Pendaftaran Gagal',
+              icon: 'warning',
+              //title: 'Pendaftaran Gagal',
               text: data.message || 'Terjadi kesalahan saat mendaftar. Silakan coba lagi.',
               confirmButtonText: 'OK'
             });
