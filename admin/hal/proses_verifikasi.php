@@ -28,8 +28,16 @@ if ($stmt->execute()) {
     $notelp = $data['no_wa_pic']; // nomor WhatsApp yang akan diberitahu
     $nama_perusahaan = $data['nama_perusahaan'];
 
+    if ($status == 1) {
+        $statusText = "Selesai";
+    } else if ($status == 2) {
+        $statusText = "Revisi";
+    } else {
+        $statusText = "Status tidak dikenal.";
+    }
+
     // Pesan WhatsApp yang akan dikirim
-    $waMessage = "Proses dokumen nomor di $nama_perusahaan telah selesai.";
+    $waMessage = "Proses dokumen $nama_perusahaan status $statusText dengan catatan $note";
 
     // Kirim pesan WhatsApp
     $token = "0Twh4hBkcwrMHifcVUuLRzkrcWgvMX87pkncHgiF1kth1VIQ4RcSB5TPVwg8BFXb";
