@@ -104,7 +104,7 @@ $result = $stmt->get_result();
 </div>
 
 <!-- Verification Modal (Sederhana) -->
-<div class="modal fade" id="verificationModal" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="verificationModal" tabindex="-1" aria-modal="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -213,28 +213,41 @@ $result = $stmt->get_result();
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    // Tampilkan notifikasi sukses
-                    const toastEl = document.getElementById('successToast');
-                    const toast = new bootstrap.Toast(toastEl);
-                    toast.show();
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Sukses!',
+                        text: 'Verifikasi berhasil disimpan!',
+                        showConfirmButton: false,
+                        timer: 1000
+                    });
 
-                    // Tutup modal setelah 1 detik
                     setTimeout(() => {
-                        const modal = bootstrap.Modal.getInstance(verificationModal);
+                        // Tutup modal
+                        const modal = bootstrap.Modal.getInstance(document.getElementById('verificationModal'));
                         modal.hide();
+
+                        // Reload jika memang dibutuhkan
+                        location.reload();
                     }, 1000);
                 } else {
-                    alert('Gagal menyimpan verifikasi: ' + data.message);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal!',
+                        text: 'Gagal menyimpan: ' + data.msg
+                    });
                 }
             })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Terjadi kesalahan saat menyimpan verifikasi');
+            .catch((error) => {
+                console.error(error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: 'Terjadi kesalahan saat menyimpan!',
+                });
             })
             .finally(() => {
-                // Kembalikan tampilan tombol
-                saveButton.innerHTML = originalContent;
-                saveButton.disabled = false;
+                saveBtn.innerHTML = originalContent;
+                saveBtn.disabled = false;
             });
     });
 
@@ -257,8 +270,3 @@ $result = $stmt->get_result();
         });
     });
 </script>
-
-<?php
-$stmt->close();
-$conn->close();
-?>

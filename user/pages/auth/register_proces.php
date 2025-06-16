@@ -50,28 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // $secret_key = '.XOrMxRzX';
             // $auth = "0Twh4hBkcwrMHifcVUuLRzkrcWgvMX87pkncHgiF1kth1VIQ4RcSB5TPVwg8BFXb.XOrMxRzX";
 
-            $waMessage = "Halo $nama, akun Anda berhasil didaftarkan ke sistem SERASI.";
-            // $data = [
-            //     "phone" => $notelp,
-            //     "message" => $waMessage,
-            //     "secret" => false,
-            //     "priority" => false,
-            //     "isGroup" => false
-            // ];
-
-            // $ch = curl_init();
-            // curl_setopt($ch, CURLOPT_URL, "https://jogja.wablas.com/api/send-message");
-            // curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            //     "Authorization: $auth",
-            //     "Content-Type: application/json"
-            // ]);
-            // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            // curl_setopt($ch, CURLOPT_POST, true);
-            // curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-            // curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-            // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-            // $wa_response = curl_exec($ch);
-            // curl_close($ch);
+            $waMessage = "Halo $nama, akun Anda telah didaftarkan ke sistem SERASI. Selanjutnya silahkan login dan lengkapi dokumen data dukungnya";
 
             if (substr($notelp, 0, 1) === '0') {
                 $notelp = substr($notelp, 1);

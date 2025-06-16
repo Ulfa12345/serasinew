@@ -55,8 +55,8 @@ $stmt->close();
                     <h5 class="mb-3 pb-2 border-bottom"><i class="fas fa-file-alt me-2 text-primary"></i>Upload Dokumen </h5>
 
                     <div class="mb-3 border rounded p-3 bg-light">
-                        <label class="form-label fw-medium">SIPA</label>
-                        <input type="file" class="form-control" name="upload_sipa" accept=".pdf,.jpg,.png" required>
+                        <label class="form-label fw-medium">SIPA</label> 
+                        <input type="file" class="form-control" name="upload_sipa" accept=".pdf,.jpg,.png">
                         <div class="form-text">Format: PDF, JPG, atau PNG (maks. 5MB)</div>
                     </div>
 
@@ -68,12 +68,15 @@ $stmt->close();
 
                     <div class="mb-3 border rounded p-3 bg-light">
                         <label class="form-label fw-medium">Surat Permohonan</label>
+                        <span class="badge badge-warning"><a href="/serasi/user/img/Surat Permohonan.docx" target="_blank">Format Surat Permohonan</a></span>
                         <input type="file" class="form-control" name="upload_suratpermohonan" accept=".pdf,.jpg,.png" required>
                         <div class="form-text">Format: PDF, JPG, atau PNG (maks. 5MB)</div>
                     </div>
 
                     <div class="mb-3 border rounded p-3 bg-light">
                         <label class="form-label fw-medium">Surat Pernyataan</label>
+                        
+                        <span class="badge badge-warning"><a href="/serasi/user/img/Surat Pernyataan.docx" target="_blank">Format Surat Pernyataan</a></span>
                         <input type="file" class="form-control" name="upload_suratpernyataan" accept=".pdf,.jpg,.png" required>
                         <div class="form-text">Format: PDF, JPG, atau PNG (maks. 5MB)</div>
                     </div>
@@ -85,6 +88,7 @@ $stmt->close();
 
                     <div class="mb-3 border rounded p-3 bg-light">
                         <label class="form-label fw-medium" id="denahLabel">Upload Denah Baru</label>
+                        <span class="badge badge-warning"><a href="/serasi/user/img/Format Denah.docx" target="_blank">Format Denah</a></span>
                         <input type="file" class="form-control" name="upload_denahbaru" accept=".jpg,.png" required>
                         <div class="form-text mt-2">
                             <span id="denahInfo">Denah untuk lokasi baru</span> | Format: JPG atau PNG (maks. 5MB)
