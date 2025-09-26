@@ -17,6 +17,9 @@ switch ($page) {
   case 'data_dokumen':
     include "pages/dokumen/data_dokumen.php";
     break;
+  case 'form_edit_dok':
+    include "pages/dokumen/form_edit_dok.php";
+    break;
 
 //Pengguna
   case 'resetpwd':

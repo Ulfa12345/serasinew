@@ -96,12 +96,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $mail->isSMTP();
                 $mail->Host = 'smtp.gmail.com';
                 $mail->SMTPAuth = true;
-                $mail->Username = 'faulfa162@gmail.com';
-                $mail->Password = 'jial pzop murw pgow'; // App password Gmail
+                $mail->Username = 'bbpom.surabaya@gmail.com';
+                $mail->Password = 'aawe zwxq hdbw ozas'; // App password Gmail
                 $mail->SMTPSecure = 'tls';
                 $mail->Port = 587;
 
-                $mail->setFrom('faulfa162@gmail.com', 'Admin SERASI');
+                $mail->setFrom('bbpom.surabaya@gmail.com', 'Admin SERASI');
                 $mail->addAddress($email, $nama);
 
                 $mail->isHTML(true);

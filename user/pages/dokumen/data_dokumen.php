@@ -38,6 +38,7 @@ $result = $stmt->get_result();
                         <?php
                         $no = 1;
                         while ($row = $result->fetch_assoc()):
+
                             // Ambil path file untuk setiap row
                             $server_path_sipa = $_SERVER['DOCUMENT_ROOT'] . '/serasi/user/pages/dokumen/uploads/' . basename($row['upload_sipa']);
                             $web_path_sipa = '/serasi/user/pages/dokumen/uploads/' . basename($row['upload_sipa']);
@@ -76,7 +77,7 @@ $result = $stmt->get_result();
                                         <li><a href="<?= $web_path_dnhbru ?> ?>" target="_blank">Denah Baru</a></li>
                                     </ul>
                                 </td>
-                                <td><a href='edit_dokumen.php?id=<?= $row['id_dokumen'] ?>' class='btn btn-warning'>Edit</a></td>
+                                <td><a href='index.php?page=form_edit_dok?&id=<?= $row['id_dok'] ?>' class='btn btn-warning'>Edit</a></td>
                                 <td><?php if ($row['status'] == 0) : ?>
                                         <span class="badge badge-dark">Proses Evaluasi</span>
                                     <?php elseif ($row['status'] == 1): ?>

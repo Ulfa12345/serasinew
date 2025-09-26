@@ -37,7 +37,8 @@ if ($stmt->execute()) {
     }
 
     // Pesan WhatsApp yang akan dikirim
-    $waMessage = "Proses dokumen $nama_perusahaan status $statusText dengan catatan $note";
+    $waMessage = "<p>Proses dokumen $nama_perusahaan status $statusText dengan catatan $note</p>
+    <p>Pesan otomatis ini dikirim melalui sistem, mohon untuk tidak dibalas.</p>";
 
     // Kirim pesan WhatsApp
     $token = "0Twh4hBkcwrMHifcVUuLRzkrcWgvMX87pkncHgiF1kth1VIQ4RcSB5TPVwg8BFXb";

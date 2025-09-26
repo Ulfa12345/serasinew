@@ -168,19 +168,15 @@ include "conf/conn.php";
 					<div class="col-lg-6  col-12">
 						<!-- Start Newsletter Form -->
 						<div class="subscribe-text ">
-							<h6>Sign up for newsletter</h6>
-							<p class="">Cu qui soleat partiendo urbanitas. Eum aperiri indoctum eu,<br> homero alterum.</p>
+							<h6>Manual Book</h6>
+							<p class="">Panduan Pengajuan Denah PBF dapat didownload</p>
 						</div>
 						<!-- End Newsletter Form -->
 					</div>
 					<div class="col-lg-6  col-12">
 						<!-- Start Newsletter Form -->
-						<div class="subscribe-form ">
-							<form action="mail/mail.php" method="get" target="_blank" class="newsletter-inner">
-								<input name="EMAIL" placeholder="Your email address" class="common-input" onfocus="this.placeholder = ''"
-									onblur="this.placeholder = 'Your email address'" required="" type="email">
-								<button class="btn">Subscribe</button>
-							</form>
+						<div class="subscribe-form ">							
+							<button class="btn">Download Manual Book</button>							
 						</div>
 						<!-- End Newsletter Form -->
 					</div>
@@ -197,7 +193,6 @@ include "conf/conn.php";
 					<div class="row">
 						<div class="col-lg-4 col-md-6 col-12">
 							<div class="single-footer">
-								<h2>About Us</h2>
 								<p> SERASI merupakan aplikasi berbasis website untuk Pengajuan Denah PBF (Pedagang Besar Farmasi) di Balai Besar POM di Surabaya</p>
 								<!-- Social -->
 								<ul class="social">

@@ -12,7 +12,8 @@ try {
         $status = 0;
 
         // Fungsi untuk upload file
-        function uploadFile($name) {
+        function uploadFile($name)
+        {
             if (!isset($_FILES[$name])) return null;
 
             $file = $_FILES[$name];
@@ -20,7 +21,7 @@ try {
 
             $allowedExtensions = ['pdf', 'jpg', 'jpeg', 'png'];
             $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-            
+
             if (!in_array($ext, $allowedExtensions)) {
                 throw new Exception("Ekstensi file tidak diizinkan untuk $name");
             }
@@ -31,7 +32,7 @@ try {
             }
 
             $newName = uniqid() . '.' . $ext;
-            $targetPath = 'uploads/' . $newName;
+            $targetPath = $_SERVER['DOCUMENT_ROOT'] . '/serasi/user/dokumen/uploads/' . $newName;
 
             if (move_uploaded_file($file['tmp_name'], $targetPath)) {
                 return $newName;
@@ -80,8 +81,7 @@ try {
                 $files['upload_denahbaru'],
                 $status
             );
-        } 
-        elseif ($jenis_pengajuan === 'Perubahan Denah') {
+        } elseif ($jenis_pengajuan === 'Perubahan Denah') {
             // Ambil denah lama terbaru
             $denah_lama = null;
             $getLastDenah = $conn->prepare("
