@@ -32,8 +32,8 @@ $result = $stmt->get_result();
                         $no = 1;
                         while ($row = $result->fetch_assoc()):
                             // Ambil path file untuk setiap row
-                            $server_path_sipa = $_SERVER['DOCUMENT_ROOT'] . '/serasi/user/upload/nib/' . basename($perusahaan['upload_nib']);
-                            $web_path_sipa = '/serasi/user/upload/nib/' . basename($perusahaan['upload_nib']);
+                            $server_path_sipa = $_SERVER['DOCUMENT_ROOT'] . '/serasi/user/upload/nib/' . basename($row['upload_nib']);
+                            $web_path_sipa = '/serasi/user/upload/nib/' . basename($row['upload_nib']);
 
                             $server_path_sph = $_SERVER['DOCUMENT_ROOT'] . 'uploads/' . basename($row['upload_suratpermohonan']);
                             $web_path_sph = 'uploads/' . basename($row['upload_suratpermohonan']);
