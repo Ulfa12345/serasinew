@@ -40,8 +40,8 @@ $result = $stmt->get_result();
                         while ($row = $result->fetch_assoc()):
 
                             // Ambil path file untuk setiap row
-                            $server_path_sipa = $_SERVER['DOCUMENT_ROOT'] . '/serasi/user/pages/dokumen/uploads/' . basename($row['upload_sipa']);
-                            $web_path_sipa = '/serasi/user/pages/dokumen/uploads/' . basename($row['upload_sipa']);
+                            $server_path_sipa = $_SERVER['DOCUMENT_ROOT'] . 'uploads/' . basename($row['upload_sipa']);
+                            $web_path_sipa = 'uploads/' . basename($row['upload_sipa']);
 
                             $server_path_sph = $_SERVER['DOCUMENT_ROOT'] . '/serasi/user/pages/dokumen/uploads/' . basename($row['upload_suratpermohonan']);
                             $web_path_sph = '/serasi/user/pages/dokumen/uploads/' . basename($row['upload_suratpermohonan']);
