@@ -44,7 +44,7 @@ $result = $stmt->get_result();
                             $server_path_sipa = $_SERVER['DOCUMENT_ROOT'] . 'user/pages/dokumen/uploads/' . basename($perusahaan['upload_sipa']);
                             $web_path_sipa = 'user/pages/dokumen/uploads/' . basename($perusahaan['upload_sipa']);
 
-                            $server_path_sph = $_SERVER['DOCUMENT_ROOT'] . 'user/pages/dokumen/uploads' . basename($row['upload_suratpermohonan']);
+                            $server_path_sph = $_SERVER['DOCUMENT_ROOT'] . 'user/pages/dokumen/uploads/' . basename($row['upload_suratpermohonan']);
                             $web_path_sph = 'user/pages/dokumen/uploads' . basename($row['upload_suratpermohonan']);
 
                             $server_path_spn = $_SERVER['DOCUMENT_ROOT'] . '/serasi/user/pages/dokumen/uploads/' . basename($row['upload_suratpernyataan']);
