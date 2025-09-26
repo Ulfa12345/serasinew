@@ -41,11 +41,11 @@ $result = $stmt->get_result();
                             //serasi/user/pages/dokumen/uploads
                             // Ambil path file untuk setiap row
 
-                            $server_path_sipa = $_SERVER['DOCUMENT_ROOT'] . 'pages/dokumen/uploads/' . basename($perusahaan['upload_sipa']);
-                            $web_path_sipa = 'pages/dokumen/uploads/' . basename($perusahaan['upload_sipa']);
+                            $server_path_sipa = $_SERVER['DOCUMENT_ROOT'] . '/pages/dokumen/uploads/' . basename($perusahaan['upload_sipa']);
+                            $web_path_sipa = '/pages/dokumen/uploads/' . basename($perusahaan['upload_sipa']);
 
-                            $server_path_sph = $_SERVER['DOCUMENT_ROOT'] . 'pages/dokumen/uploads/' . basename($row['upload_suratpermohonan']);
-                            $web_path_sph = 'pages/dokumen/uploads' . basename($row['upload_suratpermohonan']);
+                            $server_path_sph = $_SERVER['DOCUMENT_ROOT'] . '/pages/dokumen/uploads/' . basename($row['upload_suratpermohonan']);
+                            $web_path_sph = '/pages/dokumen/uploads' . basename($row['upload_suratpermohonan']);
 
                             $server_path_spn = $_SERVER['DOCUMENT_ROOT'] . '/serasi/user/pages/dokumen/uploads/' . basename($row['upload_suratpernyataan']);
                             $web_path_spn = '/serasi/user/pages/dokumen/uploads/' . basename($row['upload_suratpernyataan']);
