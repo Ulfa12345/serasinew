@@ -47,8 +47,8 @@ $result = $stmt->get_result();
                             $server_path_sph = $_SERVER['DOCUMENT_ROOT'] . '/pages/dokumen/uploads/' . basename($row['upload_suratpermohonan']);
                             $web_path_sph = '/pages/dokumen/uploads' . basename($row['upload_suratpermohonan']);
 
-                            $server_path_spn = $_SERVER['DOCUMENT_ROOT'] . '/serasi/user/pages/dokumen/uploads/' . basename($row['upload_suratpernyataan']);
-                            $web_path_spn = '/serasi/user/pages/dokumen/uploads/' . basename($row['upload_suratpernyataan']);
+                            $server_path_spn = $_SERVER['DOCUMENT_ROOT'] . '/user/pages/dokumen/uploads/' . basename($row['upload_suratpernyataan']);
+                            $web_path_spn = '/user/pages/dokumen/uploads/' . basename($row['upload_suratpernyataan']);
 
                             $server_path_pbf = $_SERVER['DOCUMENT_ROOT'] . '/serasi/user/pages/dokumen/uploads/' . basename($row['upload_ijin_pbf']);
                             $web_path_pbf = '/serasi/user/pages/dokumen/uploads/' . basename($row['upload_ijin_pbf']);
@@ -70,8 +70,8 @@ $result = $stmt->get_result();
                                         ?>
                                         <li><a href="<?= $web_path_sipa ?>" target="_blank">SIPA</a></li>
                                         <li><a href="<?= $web_path_sph ?>" target="_blank">Surat Permohonan</a></li>
-                                        <li><a href="<?= $web_path_spn ?> ?>" target="_blank">Surat Pernyataan</a></li>
-                                        <li><a href="<?= $web_path_pbf ?> ?>" target="_blank">Ijin PBF</a></li>
+                                        <li><a href="<?= $web_path_spn ?>" target="_blank">Surat Pernyataan</a></li>
+                                        <li><a href="<?= $web_path_pbf ?>" target="_blank">Ijin PBF</a></li>
                                         <?php if (!empty($row['upload_denahlama'])): ?>
                                             <li><a href="<?= $web_path_dnhlma ?> ?>" target="_blank">Denah Lama</a></li>
                                         <?php endif; ?>
