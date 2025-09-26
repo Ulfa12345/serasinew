@@ -32,7 +32,7 @@ try {
             }
 
             $newName = uniqid() . '.' . $ext;
-            $targetPath = $_SERVER['DOCUMENT_ROOT'] . '/serasi/user/pages/dokumen/uploads/' . $newName;
+            $targetPath = __DIR__ . '/uploads/' . $newName;
 
             if (move_uploaded_file($file['tmp_name'], $targetPath)) {
                 return $newName;
