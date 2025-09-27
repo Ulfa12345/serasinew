@@ -65,9 +65,9 @@ $result = $stmt->get_result();
                                         <li><a href="<?= $web_path_spn ?>" target="_blank">Surat Pernyataan</a></li>
                                         <li><a href="<?= $web_path_pbf ?>" target="_blank">Ijin PBF</a></li>
                                         <?php if (!empty($row['upload_denahlama'])): ?>
-                                            <li><a href="<?= $web_path_dnhlma ?> ?>" target="_blank">Denah Lama</a></li>
+                                            <li><a href="<?= $web_path_dnhlma ?>" target="_blank">Denah Lama</a></li>
                                         <?php endif; ?>
-                                        <li><a href="<?= $web_path_dnhbru ?> ?>" target="_blank">Denah Baru</a></li>
+                                        <li><a href="<?= $web_path_dnhbru ?>" target="_blank">Denah Baru</a></li>
                                     </ul>
                                 </td>
                                 <td><?php if ($row['status'] == 0) : ?>
