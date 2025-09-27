@@ -41,7 +41,7 @@ $result = $stmt->get_result();
                             //serasi/user/pages/dokumen/uploads
                             // Ambil path file untuk setiap row
 
-                            $server_path_sipa = $_SERVER['DOCUMENT_ROOT'] . '/pages/dokumen/uploads/' . basename($perusahaan['upload_sipa']);
+                            $server_path_sipa = $_SERVER['DOCUMENT_ROOT'] . 'user/pages/dokumen/uploads/' . basename($perusahaan['upload_sipa']);
                             $web_path_sipa = '/user/pages/dokumen/uploads/' . basename($perusahaan['upload_sipa']);
 
                             $server_path_sph = $_SERVER['DOCUMENT_ROOT'] . '/pages/dokumen/uploads/' . basename($row['upload_suratpermohonan']);
@@ -73,9 +73,9 @@ $result = $stmt->get_result();
                                         <li><a href="<?= $web_path_spn ?>" target="_blank">Surat Pernyataan</a></li>
                                         <li><a href="<?= $web_path_pbf ?>" target="_blank">Ijin PBF</a></li>
                                         <?php if (!empty($row['upload_denahlama'])): ?>
-                                            <li><a href="<?= $web_path_dnhlma ?> ?>" target="_blank">Denah Lama</a></li>
+                                            <li><a href="<?= $web_path_dnhlma ?>" target="_blank">Denah Lama</a></li>
                                         <?php endif; ?>
-                                        <li><a href="<?= $web_path_dnhbru ?> ?>" target="_blank">Denah Baru</a></li>
+                                        <li><a href="<?= $web_path_dnhbru ?>" target="_blank">Denah Baru</a></li>
                                     </ul>
                                 </td>
                                 <td><a href='index.php?page=form_edit_dok?&id=<?= $row['id_dok'] ?>' class='btn btn-warning'>Edit</a></td>
