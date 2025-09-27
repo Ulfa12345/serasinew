@@ -45,19 +45,19 @@ $result = $stmt->get_result();
                             $web_path_sipa = __DIR__ . '/uploads/' . basename($perusahaan['upload_sipa']);
 
                             $server_path_sph = $_SERVER['DOCUMENT_ROOT'] . '/pages/dokumen/uploads/' . basename($row['upload_suratpermohonan']);
-                            $web_path_sph = '/pages/dokumen/uploads' . basename($row['upload_suratpermohonan']);
+                            $web_path_sph = '/user/pages/dokumen/uploads' . basename($row['upload_suratpermohonan']);
 
                             $server_path_spn = $_SERVER['DOCUMENT_ROOT'] . '/user/pages/dokumen/uploads/' . basename($row['upload_suratpernyataan']);
                             $web_path_spn = '/user/pages/dokumen/uploads/' . basename($row['upload_suratpernyataan']);
 
-                            $server_path_pbf = $_SERVER['DOCUMENT_ROOT'] . '/serasi/user/pages/dokumen/uploads/' . basename($row['upload_ijin_pbf']);
-                            $web_path_pbf = '/serasi/user/pages/dokumen/uploads/' . basename($row['upload_ijin_pbf']);
+                            $server_path_pbf = $_SERVER['DOCUMENT_ROOT'] . '/user/pages/dokumen/uploads/' . basename($row['upload_ijin_pbf']);
+                            $web_path_pbf = '/user/pages/dokumen/uploads/' . basename($row['upload_ijin_pbf']);
 
                             $server_path_dnhlma = $_SERVER['DOCUMENT_ROOT'] . '/serasi/user/pages/dokumen/uploads/' . basename($row['upload_denahlama']);
-                            $web_path_dnhlma = '/serasi/user/pages/dokumen/uploads/' . basename($row['upload_denahlama']);
+                            $web_path_dnhlma = '/user/pages/dokumen/uploads/' . basename($row['upload_denahlama']);
 
                             $server_path_dnhbru = $_SERVER['DOCUMENT_ROOT'] . '/serasi/user/pages/dokumen/uploads/' . basename($row['upload_denahbaru']);
-                            $web_path_dnhbru = '/serasi/user/pages/dokumen/uploads/' . basename($row['upload_denahbaru']);
+                            $web_path_dnhbru = '/user/pages/dokumen/uploads/' . basename($row['upload_denahbaru']);
 
                         ?>
                             <tr>
