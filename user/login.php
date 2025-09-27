@@ -39,12 +39,13 @@
 
         <div class="card o-hidden border-0 shadow-lg my-5">
           <div class="card-body p-0">
+            <div class="col-lg-6 d-none d-lg-block my-auto" style="text-align: center;">
+              <img src="../assets/img/logo.png" class="img-fluid" alt="Responsive image" width="75%">
+            </div>
             <!-- Nested Row within Card Body -->
             <div class="row">
-              <div class="col-lg-6 d-none d-lg-block my-auto" style="text-align: center;">
-                <img src="../assets/img/logo.png" class="img-fluid" alt="Responsive image" width="75%">
-              </div>
-              <div class="col-lg-6">
+
+              <div class="col-lg-12">
                 <div class="p-5">
                   <div class="text-center">
                     <h1 class="h4 text-gray-900 mb-4">SERASI | LOGIN<br><small class="badge badge-success">- Sistem Pengajuan Denah PBF -</small></h1>
@@ -60,16 +61,17 @@
                       </div>
                     </div>
                     <div class="form-group">
-                      <div class="custom-control custom-checkbox small">
-                        <input type="checkbox" class="custom-control-input" id="customCheck">
-                        <label class="custom-control-label" for="customCheck">Tetap Masuk</label>
-                      </div>
+                      <small id="passwordHelp">
+                        Minimal 6 karakter, huruf besar, huruf kecil, angka, dan karakter khusus.
+                      </small>
                     </div>
-                    <button type="submit" class="btn btn-success btn-user btn-block">Login</button>
+                    <div class="input-group">
+                      <button type="submit" class="btn btn-success btn-user btn-block">Login</button>
+                    </div>
                   </form>
                   <hr>
                   <div class="text-center">
-                    <a class="small" href="pages/auth/send_reset_email.php">Lupa Password?</a>
+                    <a class="small" href="forgot_password.php">Lupa Password?</a>
                   </div>
                   <div class="text-center">
                     <a class="small" href="signup.php">Belum Punya Akun? Register!</a>
@@ -135,6 +137,27 @@
         pswdField.type = "password";
       }
     }
+
+    const passwordField = document.getElementById('pswd');
+    const passwordHelp = document.getElementById('passwordHelp');
+
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,}$/;
+
+    passwordField.addEventListener('input', function() {
+      const password = passwordField.value;
+
+      if (passwordRegex.test(password)) {
+        passwordField.classList.remove('is-invalid');
+        passwordField.classList.add('is-valid');
+        passwordHelp.textContent = "Password sudah sesuai ketentuan.";
+        passwordHelp.style.color = "green";
+      } else {
+        passwordField.classList.remove('is-valid');
+        passwordField.classList.add('is-invalid');
+        passwordHelp.textContent = "Minimal 6 karakter, harus ada huruf besar, huruf kecil, angka, dan karakter khusus.";
+        passwordHelp.style.color = "red";
+      }
+    });
 
     // Form submission with SweetAlert
     document.getElementById('loginForm').addEventListener('submit', function(e) {

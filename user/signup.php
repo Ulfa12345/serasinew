@@ -57,15 +57,27 @@
                 <div class="form-group">
                   <input type="number" class="form-control form-control-user" id="notelp" name="no_wa" placeholder="Nomor WA yang bisa dihubungi untuk notifikasi pendaftaran" required>
                 </div>
-                <div class="form-group">
+                <div class="input-group">
                   <input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Buat password untuk login ke akun anda" required>
-                  <small id="passwordHelp" class="badge badge-warning">
-                    Minimal 6 karakter, huruf besar, huruf kecil, angka, dan karakter khusus.
-                  </small>
-                  <span class="badge badge-primary">Mohon Selalu Diingat/Catat karena Password ini digunakan Untuk Login dan Mengakses Dokumen Setiap Saat Dibutuhkan</span>
+                  <div class="input-group-append">
+                    <span class="input-group-text" id="togglePassword" style="cursor:pointer;">
+                      <i class="fa fa-eye fa-fw"></i>
+                    </span>
+                  </div>
                 </div>
-                <button class="button btn btn-success btn-large btn-user btn-block" type="submit">Register</button>
+                <div class="form-group">
+                  <span id="passwordHelp" class="badge badge-warning">
+                    Minimal 6 karakter, huruf besar, huruf kecil, angka, dan karakter khusus.
+                  </span>
+                  <span class="badge badge-primary">
+                    Mohon selalu diingat/catat karena password ini digunakan untuk login dan mengakses dokumen setiap saat dibutuhkan.
+                  </span>
+                </div>
+                <div class="form-group">
+                  <button class="button btn btn-success btn-large btn-user btn-block" type="submit">Register</button>
+                </div>
               </form>
+
               <hr>
               <div class="text-center">
                 <a class="small" href="forgot-password.html">Lupa Password?</a>
@@ -101,6 +113,20 @@
 
   <script src="https://cdn.jsdelivr.net/npm/ajax@0.0.4/lib/ajax.min.js"></script>
   <script>
+    document.getElementById("togglePassword").addEventListener("click", function() {
+      const passwordField = document.getElementById("password");
+      const icon = this.querySelector("i");
+      if (passwordField.type === "password") {
+        passwordField.type = "text";
+        icon.classList.remove("fa-eye");
+        icon.classList.add("fa-eye-slash");
+      } else {
+        passwordField.type = "password";
+        icon.classList.remove("fa-eye-slash");
+        icon.classList.add("fa-eye");
+      }
+    });
+
     //Sweet Alert
     document.getElementById('registrationForm').addEventListener('submit', function(e) {
       e.preventDefault();

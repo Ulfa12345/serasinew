@@ -1,33 +1,32 @@
 <?php
-if(isset($_GET['page'])){
+if (isset($_GET['page'])) {
   $page = $_GET['page'];
-switch ($page) {
-// Profil
-  case 'lengkapidata':
-    include "pages/profil/lengkapidata.php";
-    break;
-  case 'dataperusahaan':
-    include "pages/profil/dataperusahaan.php";
-    break;
+  switch ($page) {
+    // Profil
+    case 'lengkapidata':
+      include "pages/profil/lengkapidata.php";
+      break;
+    case 'dataperusahaan':
+      include "pages/profil/dataperusahaan.php";
+      break;
 
-// Dokumen
-  case 'formupload':
-    include "pages/dokumen/formupload.php";
-    break;
-  case 'data_dokumen':
-    include "pages/dokumen/data_dokumen.php";
-    break;
-  case 'form_edit_dok':
-    include "pages/dokumen/form_edit_dok.php";
-    break;
+    // Dokumen
+    case 'formupload':
+      include "pages/dokumen/formupload.php";
+      break;
+    case 'data_dokumen':
+      include "pages/dokumen/data_dokumen.php";
+      break;
+    case 'form_edit_dok':
+      include "pages/dokumen/form_edit_dok.php";
+      break;
 
-//Pengguna
-  case 'resetpwd':
-    include "pages/auth/resetpwd.php";
-    break;
+    //Pengguna
+    case 'resetpwd':
+      include "pages/auth/resetpwd.php";
+      break;
   }
-}else{
+} else {
   //Beranda
-    include "pages/home.php";
-  }
-?>
+  include "pages/home.php";
+}
