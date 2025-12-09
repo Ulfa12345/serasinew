@@ -35,12 +35,12 @@
     <!-- Outer Row -->
     <div class="row justify-content-center">
 
-      <div class="col-xl-10 col-lg-12 col-md-9">
+      <div class="col-12 col-sm-6">
 
         <div class="card o-hidden border-0 shadow-lg my-5">
           <div class="card-body p-0">
-            <div class="col-lg-6 d-none d-lg-block my-auto" style="text-align: center;">
-              <img src="../assets/img/logo.png" class="img-fluid" alt="Responsive image" width="75%">
+            <div class="card-header">
+              <img src="../assets/img/logo-header.png" class="img-fluid" alt="Responsive image" width="25%">
             </div>
             <!-- Nested Row within Card Body -->
             <div class="row">
@@ -78,6 +78,9 @@
                   </div>
                   <div class="text-center">
                     <a class="small" href="../">Kembali Ke Beranda</a>
+                  </div>
+                  <div class="text-center">
+                    <a class="badge badge-primary" href="../admin/auth/login.php">Login Admin</a>
                   </div>
                 </div>
               </div>

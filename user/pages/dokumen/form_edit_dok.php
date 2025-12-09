@@ -1,187 +1,61 @@
 <?php
-$connPath = __DIR__ . '/../../conf/conn.php';
 
-if (isset($_GET['id'])) {
-    $id = $_GET['id'];
+$id_dok = $_GET['id'] ?? 0;
 
-    $sql = "SELECT * FROM tb_dokumen WHERE id_dok = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result->num_rows > 0) {
-        $data = $result->fetch_assoc();
-    } else {
-        echo "Data perusahaan tidak ditemukan.";
-        exit;
-    }
-} else {
-    echo "ID perusahaan tidak disertakan di URL.";
-    exit;
-}
+$sql = "SELECT * FROM tb_dokumen WHERE id_dok = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $id_dok);
+$stmt->execute();
+$result = $stmt->get_result();
+$data = $result->fetch_assoc();
 ?>
 
 <div class="container-fluid">
+    <div class="card shadow-sm mt-4">
+        <div class="card-header text-white">
+            <h4 class="mb-0">Edit Data Dokumen</h4>
+        </div>
 
-    <h3 class="mb-4">Form Pengajuan Dokumen dan Denah</h3>
-    <div class="card shadow-lg">
         <div class="card-body">
-            <form method="POST" id="uploadForm" enctype="multipart/form-data">
+
+            <form action="update_dokumen.php" method="POST" enctype="multipart/form-data">
+
+                <input type="hidden" name="id_dok" value="<?= $data['id_dok']; ?>">
+
                 <!-- Jenis Pengajuan -->
-                <div class="row mb-4">
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label fw-bold">Jenis Pengajuan <span class="text-danger">*</span></label>
-                            <select class="form-control" id="jenis_pengajuan" name="jenis_pengajuan" required>
-                                <option value="" selected disabled>Pilih jenis pengajuan</option>
-                                <option value="Permohonan Baru">Permohonan Baru</option>
-                                <option value="Perubahan Denah">Perubahan Denah</option>
-                            </select>
-                        </div>
-                    </div>
+                <div class="form-group mb-3">
+                    <label class="fw-bold">Jenis Pengajuan</label>
+                    <input type="text" name="jenis_pengajuan" class="form-control"
+                        value="<?= $data['jenis_pengajuan']; ?>" required>
                 </div>
 
-                <!-- Info Boxes -->
-                <div class="alert alert-info mb-4" id="infoPermohonanBaru" style="display: none;">
-                    <i class="fas fa-info-circle me-2"></i>
-                    <strong>Permohonan Baru:</strong> Mengajukan denah baru untuk pertama kali
+                <!-- Surat Permohonan -->
+                <div class="form-group mb-3">
+                    <label class="fw-bold">Upload Surat Permohonan <small>(kosongkan jika tidak diubah)</small></label>
+                    <input type="file" name="upload_suratpermohonan" class="form-control">
+                    <small class="text-muted">File saat ini: <?= $data['upload_suratpermohonan']; ?></small>
                 </div>
 
-                <div class="alert alert-info mb-4" id="infoPerubahanDenah" style="display: none;">
-                    <i class="fas fa-info-circle me-2"></i>
-                    <strong>Perubahan Denah:</strong>
-                    Sistem akan otomatis menyimpan denah sebelumnya sebagai denah lama
+                <!-- Surat Pernyataan -->
+                <div class="form-group mb-3">
+                    <label class="fw-bold">Upload Surat Pernyataan <small>(kosongkan jika tidak diubah)</small></label>
+                    <input type="file" name="upload_suratpernyataan" class="form-control">
+                    <small class="text-muted">File saat ini: <?= $data['upload_suratpernyataan']; ?></small>
                 </div>
 
-                <!-- Dokumen Wajib -->
-                <div class="mb-4">
-                    <h5 class="mb-3 pb-2 border-bottom"><i class="fas fa-file-alt me-2 text-primary"></i>Upload Dokumen </h5>
-
-                    <div class="mb-3 border rounded p-3 bg-light">
-                        <label class="form-label fw-medium">SIPA</label>
-                        <input type="file" class="form-control" name="upload_sipa" accept=".pdf,.jpg,.png">
-                        <div class="form-text">Format: PDF, JPG, atau PNG (maks. 5MB)</div>
-                    </div>
-
-                    <div class="mb-3 border rounded p-3 bg-light">
-                        <label class="form-label fw-medium">Izin PBF</label>
-                        <input type="file" class="form-control" name="upload_ijin_pbf" accept=".pdf,.jpg,.png" required>
-                        <div class="form-text">Format: PDF, JPG, atau PNG (maks. 5MB)</div>
-                    </div>
-
-                    <div class="mb-3 border rounded p-3 bg-light">
-                        <label class="form-label fw-medium">Surat Permohonan</label>
-                        <span class="badge badge-warning"><a href="/serasi/user/img/Surat Permohonan.docx" target="_blank">Format Surat Permohonan</a></span>
-                        <input type="file" class="form-control" name="upload_suratpermohonan" accept=".pdf,.jpg,.png" required>
-                        <div class="form-text">Format: PDF, JPG, atau PNG (maks. 5MB)</div>
-                    </div>
-
-                    <div class="mb-3 border rounded p-3 bg-light">
-                        <label class="form-label fw-medium">Surat Pernyataan</label>
-
-                        <span class="badge badge-warning"><a href="/serasi/user/img/Surat Pernyataan.docx" target="_blank">Format Surat Pernyataan</a></span>
-                        <input type="file" class="form-control" name="upload_suratpernyataan" accept=".pdf,.jpg,.png" required>
-                        <div class="form-text">Format: PDF, JPG, atau PNG (maks. 5MB)</div>
-                    </div>
+                <!-- Denah Baru -->
+                <div class="form-group mb-3">
+                    <label class="fw-bold">Upload Denah Baru <small>(kosongkan jika tidak diubah)</small></label>
+                    <input type="file" name="upload_denahbaru" class="form-control">
+                    <small class="text-muted">File saat ini: <?= $data['upload_denahbaru']; ?></small>
                 </div>
 
-                <!-- Upload Denah -->
-                <div class="mb-4">
-                    <h5 class="mb-3 pb-2 border-bottom"><i class="fas fa-map me-2 text-primary"></i>Upload Denah</h5>
-
-                    <div class="mb-3 border rounded p-3 bg-light">
-                        <label class="form-label fw-medium" id="denahLabel">Upload Denah Baru</label>
-                        <span class="badge badge-warning"><a href="/serasi/user/img/Format Denah.docx" target="_blank">Format Denah</a></span>
-                        <input type="file" class="form-control" name="upload_denahbaru" accept=".jpg,.png" required>
-                        <div class="form-text mt-2">
-                            <span id="denahInfo">Denah untuk lokasi baru</span> | Format: JPG atau PNG (maks. 5MB)
-                        </div>
-                    </div>
-
-                    <div class="alert alert-warning" id="denahLamaInfo" style="display: none;">
-                        <i class="fas fa-exclamation-triangle me-2"></i>
-                        Denah lama akan otomatis diambil dari pengajuan terakhir
-                    </div>
-                </div>
-
-                <!-- Tombol Submit -->
-                <div class="d-grid mt-12">
-                    <button type="submit" class="btn btn-success btn-lg">
-                        <i class="fas fa-paper-plane me-2"></i>Kirim Pengajuan
-                    </button>
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-primary">Update Data</button>
+                    <a href="index.php" class="btn btn-secondary">Kembali</a>
                 </div>
             </form>
+
         </div>
     </div>
 </div>
-</div>
-
-<script>
-    // Tampilkan info berdasarkan jenis pengajuan
-    const jenisPengajuan = document.getElementById('jenis_pengajuan');
-    const infoPermohonanBaru = document.getElementById('infoPermohonanBaru');
-    const infoPerubahanDenah = document.getElementById('infoPerubahanDenah');
-    const denahLamaInfo = document.getElementById('denahLamaInfo');
-    const denahLabel = document.getElementById('denahLabel');
-    const denahInfo = document.getElementById('denahInfo');
-
-    jenisPengajuan.addEventListener('change', function() {
-        if (this.value === 'Permohonan Baru') {
-            infoPermohonanBaru.style.display = 'none';
-            infoPerubahanDenah.style.display = 'none';
-            denahLamaInfo.style.display = 'none';
-            denahLabel.textContent = 'Upload Denah Baru';
-            denahInfo.textContent = 'Denah untuk lokasi baru';
-        } else if (this.value === 'Perubahan Denah') {
-            infoPermohonanBaru.style.display = 'none';
-            infoPerubahanDenah.style.display = 'block';
-            denahLamaInfo.style.display = 'block';
-            denahLabel.textContent = 'Upload Denah Baru (Perubahan)';
-            denahInfo.textContent = 'Denah baru setelah perubahan';
-        }
-    });
-
-    //uploadForm
-
-    $(document).ready(function() {
-        // Tangani submit form
-        $('#uploadForm').on('submit', function(e) {
-            e.preventDefault();
-
-            $.ajax({
-                url: 'pages/dokumen/proses_upload_dok.php',
-                type: 'POST',
-                data: new FormData(this), // Gunakan FormData untuk handle file upload
-                contentType: false, // Penting untuk FormData
-                processData: false, // Penting untuk FormData
-                dataType: 'json',
-                success: function(response) {
-                    if (response.status === 'success') {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Berhasil',
-                            text: response.message
-                        }).then(() => {
-                            window.location.href = "index.php?page=data_dokumen";
-                        });
-                    } else {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Gagal',
-                            text: response.message
-                        });
-                    }
-                },
-                error: function(xhr) {
-                    const message = xhr.responseJSON?.message || 'Terjadi kesalahan saat mengirim data';
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: message
-                    });
-                }
-            });
-        });
-    });
-</script>

@@ -9,6 +9,15 @@ if (isset($_GET['page'])) {
     case 'dataperusahaan':
       include "pages/profil/dataperusahaan.php";
       break;
+    case 'datagudang':
+      include "pages/profil/datagudang.php";
+      break;
+    case 'update_perusahaan.php':
+      include "pages/profil/update_perusahaan.php";
+      break;
+    case 'dashboard':
+      include "pages/dashboard.php";
+      break;
 
     // Dokumen
     case 'formupload':

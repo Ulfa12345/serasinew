@@ -2,112 +2,83 @@
 session_start();
 include "../../../conf/conn.php";
 
-// Pastikan tidak ada output sebelum header
-if (ob_get_length()) ob_clean();
-header('Content-Type: application/json');
-
-try {
-    // Validasi metode request
-    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-        throw new Exception("Hanya metode POST yang diizinkan", 405);
-    }
-
-    // Validasi session
-    if (!isset($_SESSION['id_perusahaan'])) {
-        throw new Exception("Session tidak valid. Silakan login kembali.", 401);
-    }
-
-    // Handle file upload (jika ada)
-    $uploadedFile = null;
-    if (!empty($_FILES['upload_nib']['name'])) {
-        $file = $_FILES['upload_nib'];
-        $allowedTypes = ['application/pdf', 'image/jpeg', 'image/png'];
-        $maxSize = 2 * 1024 * 1024; // 2MB
-
-        // Validasi error upload
-        if ($file['error'] !== UPLOAD_ERR_OK) {
-            throw new Exception("Error upload file: " . $file['error']);
-        }
-
-        // Validasi tipe file
-        if (!in_array($file['type'], $allowedTypes)) {
-            throw new Exception("Hanya PDF, JPG, dan PNG yang diizinkan");
-        }
-
-        // Validasi ukuran file
-        if ($file['size'] > $maxSize) {
-            throw new Exception("Ukuran file maksimal 2MB");
-        }
-
-        // Generate nama file unik
-        $fileExt = pathinfo($file['name'], PATHINFO_EXTENSION);
-        $uploadedFile = uniqid('nib_') . '.' . $fileExt;
-        //$targetDir = __DIR__ . 'pages/upload/nib/';
-        $targetDir = $_SERVER['DOCUMENT_ROOT'] . '/serasi/user/upload/nib/';
-
-        // Buat direktori jika belum ada
-        if (!file_exists($targetDir) && !mkdir($targetDir, 0755, true)) {
-            throw new Exception("Gagal membuat direktori upload");
-        }
-
-        // Pindahkan file
-        if (!move_uploaded_file($file['tmp_name'], $targetDir . $uploadedFile)) {
-            throw new Exception("Gagal menyimpan file");
-        }
-    }
-
-    // Validasi input wajib
-    $requiredFields = [
-        'nama_perusahaan' => "Nama perusahaan wajib diisi",
-        'alamat_perusahaan' => "Alamat perusahaan wajib diisi",
-        'nama_pic' => "Nama penanggung jawab wajib diisi",
-        'no_wa_pic' => "Nomor HP wajib diisi",
-        'email' => "Email wajib diisi"
-    ];
-
-    foreach ($requiredFields as $field => $message) {
-        if (empty($_POST[$field])) {
-            throw new Exception($message);
-        }
-    }
-
-    // Update database
-    $stmt = $conn->prepare("UPDATE tb_perusahaan SET 
-        nama_perusahaan = ?,
-        alamat_perusahaan = ?,
-        nama_pic = ?,
-        no_wa_pic = ?,
-        upload_nib = COALESCE(?, upload_nib),
-        email = ?
-        WHERE id_perusahaan = ?");
-
-    $stmt->bind_param(
-        "ssssssi",
-        $_POST['nama_perusahaan'],
-        $_POST['alamat_perusahaan'],
-        $_POST['nama_pic'],
-        $_POST['no_wa_pic'],
-        $uploadedFile,
-        $_POST['email'],
-        $_SESSION['id_perusahaan']
-    );
-
-    if (!$stmt->execute()) {
-        throw new Exception("Gagal update database: " . $stmt->error);
-    }
-
-    echo json_encode([
-        'status' => 'success',
-        'message' => 'Data berhasil diperbarui'
-    ]);
-
-} catch (Exception $e) {
-    http_response_code(400);
-    echo json_encode([
-        'status' => 'error',
-        'message' => $e->getMessage(),
-        'code' => $e->getCode()
-    ]);
+// Pastikan user login dan punya id_perusahaan
+if (!isset($_SESSION['id_perusahaan'])) {
+    echo json_encode(["status" => "error", "message" => "Session perusahaan tidak ditemukan"]);
+    exit;
 }
 
-exit();
+$id_perusahaan = $_SESSION['id_perusahaan'];
+
+// Folder upload
+$upload_dir = "../../uploads/";
+
+// die(var_dump($_POST));
+
+// Fungsi upload file
+function uploadFile($field_name, $upload_dir, $old_file = "")
+{
+    if (isset($_FILES[$field_name]) && $_FILES[$field_name]['error'] === 0) {
+        $allowed_ext = ['pdf'];
+
+        $file_name = $_FILES[$field_name]['name'];
+        $file_tmp  = $_FILES[$field_name]['tmp_name'];
+        $ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
+
+        if (!in_array($ext, $allowed_ext)) {
+            return $old_file; // kalau ekstensi salah, ignore
+        }
+
+        $new_name = $field_name . "_" . time() . "." . $ext;
+        $destination = $upload_dir . $new_name;
+
+        if (move_uploaded_file($file_tmp, $destination)) {
+            return $new_name;
+        }
+    }
+    return $old_file;
+}
+
+// Ambil data lama
+$q_old = mysqli_query($conn, "SELECT * FROM tb_perusahaan WHERE id_perusahaan='$id_perusahaan'");
+$data_lama = mysqli_fetch_assoc($q_old);
+
+// Upload file (jika ada)
+$upload_nib      = uploadFile('upload_nib', $upload_dir, $data_lama['upload_nib']);
+$upload_ijin_pbf = uploadFile('upload_ijin_pbf', $upload_dir, $data_lama['upload_ijin_pbf']);
+$upload_cdob     = uploadFile('upload_cdob', $upload_dir, $data_lama['upload_cdob']);
+$upload_sipa     = uploadFile('upload_sipa', $upload_dir, $data_lama['upload_sipa']);
+
+// Ambil input text/date
+$nomor_cdob        = $_POST['no_cdob'] ?? $data_lama['nomor_cdob'];
+$tgl_berlaku_cdob  = $_POST['tgl_berlaku_cdob'] ?? $data_lama['tgl_berlaku_cdob'];
+
+$nomor_sipa        = $_POST['no_sipa'] ?? $data_lama['no_sipa'];
+$tgl_berlaku_sipa  = $_POST['tgl_berlaku_sipa'] ?? $data_lama['tgl_berlaku_sipa'];
+
+// Query update
+$sql = "UPDATE tb_perusahaan SET
+            upload_nib='$upload_nib',
+            upload_ijin_pbf='$upload_ijin_pbf',
+            upload_cdob='$upload_cdob',
+            nomor_cdob='$nomor_cdob',
+            tgl_berlaku_cdob='$tgl_berlaku_cdob',
+            upload_sipa='$upload_sipa',
+            no_sipa='$nomor_sipa',
+            tgl_berlaku_sipa='$tgl_berlaku_sipa'
+        WHERE id_perusahaan='$id_perusahaan'";
+
+if (mysqli_query($conn, $sql)) {
+    echo json_encode([
+        "status" => "success",
+        "message" => "Data perusahaan berhasil diperbarui!",
+        "redirect" => "index.php?page=datagudang",
+    ]);
+    // echo "<script>alert('Data perusahaan berhasil diperbarui'); window.location='index.php?page=dataperusahaan';</script>";
+} else {
+    echo json_encode([
+        "status" => "error",
+        "message" => $e->getMessage()
+    ]);
+    // echo "<script>alert('Gagal update data'); history.back();</script>";
+}

@@ -36,7 +36,7 @@ $email = $data['email'];
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css>
     <link rel="icon" type="image/x-icon" href="../img/favicon.png" />
 </head>
 
@@ -61,7 +61,15 @@ $email = $data['email'];
                                         <input type="hidden" name="token" value="<?= htmlspecialchars($token) ?>">
                                         <div class="form-group">
                                             <label>Password Baru</label>
-                                            <input type="password" class="form-control" name="password" required>
+                                            <input type="password" class="form-control" name="password" id="pswd" required>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text"><i class="fa fa-eye fa-fw" style="cursor: pointer;" onclick="showpswd()"></i></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <small id="passwordHelp">
+                                                Minimal 6 karakter, huruf besar, huruf kecil, angka, dan karakter khusus
+                                            </small>
                                         </div>
                                         <button type="submit" class="btn btn-success">Reset Password</button>
                                     </form>
@@ -84,3 +92,34 @@ $email = $data['email'];
 
 <!-- Custom scripts for all pages-->
 <script src="js/sb-admin-2.min.js"></script>
+
+<script>
+    const passwordField = document.getElementById('pswd');
+    const passwordHelp = document.getElementById('passwordHelp');
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,}$/;
+
+    passwordField.addEventListener('input', function() {
+        const password = passwordField.value;
+
+        if (passwordRegex.test(password)) {
+            passwordField.classList.remove('is-invalid');
+            passwordField.classList.add('is-valid');
+            passwordHelp.textContent = "Password sudah sesuai ketentuan.";
+            passwordHelp.style.color = "green";
+        } else {
+            passwordField.classList.remove('is-valid');
+            passwordField.classList.add('is-invalid');
+            passwordHelp.textContent = "Minimal 6 karakter, harus ada huruf besar, huruf kecil, angka, dan karakter khusus.";
+            passwordHelp.style.color = "red";
+        }
+    });
+
+    function showpswd() {
+        const pswdField = document.getElementById('pswd');
+        if (pswdField.type === "password") {
+            pswdField.type = "text";
+        } else {
+            pswdField.type = "password";
+        }
+    }
+</script>

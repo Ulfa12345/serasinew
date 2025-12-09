@@ -43,8 +43,6 @@ try {
         // Upload semua file dengan validasi
         $files = [];
         $requiredFiles = [
-            'upload_sipa' => 'SIPA',
-            'upload_ijin_pbf' => 'Izin PBF',
             'upload_suratpermohonan' => 'Surat Permohonan',
             'upload_suratpernyataan' => 'Surat Pernyataan',
             'upload_denahbaru' => 'Denah Baru'
@@ -62,20 +60,16 @@ try {
             $stmt = $conn->prepare("INSERT INTO tb_dokumen (
                 id_perusahaan,
                 jenis_pengajuan,
-                upload_sipa,
-                upload_ijin_pbf,
                 upload_suratpermohonan,
                 upload_suratpernyataan,
                 upload_denahbaru,
                 status
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+            ) VALUES (?, ?, ?, ?, ?, ?)");
 
             $stmt->bind_param(
-                "issssssi",
+                "issssi",
                 $id_perusahaan,
                 $jenis_pengajuan,
-                $files['upload_sipa'],
-                $files['upload_ijin_pbf'],
                 $files['upload_suratpermohonan'],
                 $files['upload_suratpernyataan'],
                 $files['upload_denahbaru'],
@@ -102,21 +96,17 @@ try {
             $stmt = $conn->prepare("INSERT INTO tb_dokumen (
                 id_perusahaan,
                 jenis_pengajuan,
-                upload_sipa,
-                upload_ijin_pbf,
                 upload_suratpermohonan,
                 upload_suratpernyataan,
                 upload_denahlama,
                 upload_denahbaru,
                 status
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            ) VALUES (?, ?, ?, ?, ?, ?, ?)");
 
             $stmt->bind_param(
-                "isssssssi",
+                "isssssi",
                 $id_perusahaan,
                 $jenis_pengajuan,
-                $files['upload_sipa'],
-                $files['upload_ijin_pbf'],
                 $files['upload_suratpermohonan'],
                 $files['upload_suratpernyataan'],
                 $denah_lama,

@@ -3,13 +3,13 @@ session_start();
 
 $timeout = 18000; // Number of seconds until it times out.
 //$logout_redirect = 'login.php';
- 
+
 // Check if the timeout field exists.
-if(isset($_SESSION['timeout'])) {
+if (isset($_SESSION['timeout'])) {
     // See if the number of seconds since the last
     // visit is larger than the timeout period.
     $duration = time() - (int)$_SESSION['timeout'];
-    if($duration > $timeout) {
+    if ($duration > $timeout) {
 
         // remove all session variables
         session_unset();
@@ -19,7 +19,7 @@ if(isset($_SESSION['timeout'])) {
         // session_start();
     }
 }
-$_SESSION['start_session']=time();
+$_SESSION['start_session'] = time();
 // Update the timout field with the current time.
 $_SESSION['timeout'] = time();
 
@@ -27,15 +27,51 @@ include "../conf/conn.php";
 // Pastikan user sudah login
 
 $perusahaan = [];
+$needCompletePerusahaan = false;
+$needCompleteGudang = false;
+
 if (isset($_SESSION['id_perusahaan'])) {
     $id_perusahaan = $_SESSION['id_perusahaan'];
+
+    // Ambil data perusahaan
     $stmt = $conn->prepare("SELECT * FROM tb_perusahaan WHERE id_perusahaan = ?");
     $stmt->bind_param("i", $id_perusahaan);
     $stmt->execute();
     $result = $stmt->get_result();
     $perusahaan = $result->fetch_assoc();
     $stmt->close();
-    
+
+    // Cek kelengkapan data perusahaan
+    if (
+        empty($perusahaan['upload_nib']) ||
+        empty($perusahaan['upload_ijin_pbf']) ||
+        empty($perusahaan['upload_cdob']) ||
+        empty($perusahaan['nomor_cdob']) ||
+        empty($perusahaan['tgl_berlaku_cdob']) ||
+        empty($perusahaan['upload_sipa']) ||
+        empty($perusahaan['no_sipa']) ||
+        empty($perusahaan['tgl_berlaku_sipa'])
+    ) {
+        $needCompletePerusahaan = true;
+    }
+
+
+    // Cek data gudang
+    $gudangStmt = $conn->prepare("SELECT * FROM tb_gudang WHERE id_perusahaan = ? LIMIT 1");
+    $gudangStmt->bind_param("i", $id_perusahaan);
+    $gudangStmt->execute();
+    $gudangResult = $gudangStmt->get_result();
+    $needCompleteGudang = $gudangResult->num_rows === 0;
+    $gudangStmt->close();
+
+    // var_dump($needCompleteGudang, $needCompletePerusahaan);
+    // die;
+
+    // Simpan status di JavaScript variable
+    echo "<script>
+        var needCompletePerusahaan = " . ($needCompletePerusahaan ? 'true' : 'false') . ";
+        var needCompleteGudang = " . ($needCompleteGudang ? 'true' : 'false') . ";
+    </script>";
 }
 
 ?>
@@ -51,7 +87,7 @@ if (isset($_SESSION['id_perusahaan'])) {
     <meta name="author" content="">
 
     <title>SERASI - Dashboard</title>
-    
+
     <link rel="shortcut icon" href="../img/favicon.png">
 
     <!-- Custom fonts for this template-->
@@ -63,7 +99,7 @@ if (isset($_SESSION['id_perusahaan'])) {
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
-      <!-- Bootstrap core JavaScript-->
+    <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
@@ -79,7 +115,7 @@ if (isset($_SESSION['id_perusahaan'])) {
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
-    
+
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- Bootstrap JS -->
@@ -91,8 +127,211 @@ if (isset($_SESSION['id_perusahaan'])) {
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.min.css" rel="stylesheet">
 
     <script src="https://cdn.jsdelivr.net/npm/ajax@0.0.4/lib/ajax.min.js"></script>
+    <style>
+        :root {
+            --primary: #2c5aa0;
+            --secondary: #6c757d;
+            --success: #198754;
+            --danger: #dc3545;
+            --warning: #ffc107;
+            --light: #f8f9fa;
+            --dark: #212529;
+        }
 
-    
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f5f7fb;
+            color: #333;
+        }
+
+        .page-header {
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+
+        .card {
+            border-radius: 12px;
+            border: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            margin-bottom: 24px;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+        }
+
+        .card-header {
+            background-color: white;
+            border-bottom: 1px solid #eaeaea;
+            padding: 16px 20px;
+            border-radius: 12px 12px 0 0 !important;
+            font-weight: 600;
+        }
+
+        .info-card {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            font-weight: 500;
+            color: #555;
+            min-width: 180px;
+        }
+
+        .info-value {
+            color: #222;
+            font-weight: 400;
+        }
+
+        .form-section {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .form-section:last-child {
+            border-bottom: none;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #eaeaea;
+        }
+
+        .file-upload-area {
+            border: 2px dashed #cbd5e0;
+            border-radius: 8px;
+            padding: 24px;
+            text-align: center;
+            transition: all 0.3s ease;
+            background-color: #fafbfc;
+            cursor: pointer;
+        }
+
+        .file-upload-area:hover {
+            border-color: var(--primary);
+            background-color: #f0f7ff;
+        }
+
+        .file-upload-area.dragover {
+            border-color: var(--primary);
+            background-color: #e6f2ff;
+        }
+
+        .file-info {
+            font-size: 0.85rem;
+            color: var(--secondary);
+            margin-top: 8px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            border-color: var(--primary);
+            padding: 10px 24px;
+            font-weight: 500;
+            border-radius: 8px;
+        }
+
+        .btn-primary:hover {
+            background-color: #234a8c;
+            border-color: #234a8c;
+        }
+
+        .alert-section {
+            background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%);
+            border: 1px solid #feb2b2;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 24px;
+        }
+
+        .alert-icon {
+            color: var(--danger);
+            font-size: 1.5rem;
+            margin-right: 12px;
+        }
+
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .status-completed {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-pending {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+
+        .document-preview {
+            max-width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+        }
+
+        /* Otomatis beri bintang merah pada label required */
+        label.required::after {
+            content: " *";
+            color: red;
+        }
+
+        h5.required::after {
+            content: " *";
+            color: red;
+        }
+
+        .dropzone {
+            border: 2px dashed #28a745;
+            border-radius: 5px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            color: #28a745;
+            font-weight: 500;
+        }
+
+        .dropzone:hover {
+            background-color: #e6f4ea;
+        }
+
+        @media (max-width: 768px) {
+            .info-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .info-label {
+                min-width: auto;
+                margin-bottom: 4px;
+            }
+        }
+    </style>
+
 
 </head>
 
@@ -117,7 +356,7 @@ if (isset($_SESSION['id_perusahaan'])) {
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="index.php">
+                <a class="nav-link" href="./index.php?page=dashboard">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -140,6 +379,7 @@ if (isset($_SESSION['id_perusahaan'])) {
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="./index.php?page=dataperusahaan">Data Perusahaan</a>
+                        <a class="collapse-item" href="./index.php?page=datagudang">Data Gudang</a>
                     </div>
                 </div>
             </li>
@@ -178,12 +418,12 @@ if (isset($_SESSION['id_perusahaan'])) {
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Login Screens:</h6>
-                        <a class="collapse-item" href="./index.php?page=resetpwd">Reset Password</a>                        
+                        <a class="collapse-item" href="./index.php?page=resetpwd">Reset Password</a>
                     </div>
                 </div>
             </li>
 
-            
+
         </ul>
         <!-- End of Sidebar -->
 
@@ -281,35 +521,40 @@ if (isset($_SESSION['id_perusahaan'])) {
                 <!-- End of Topbar -->
                 <?php include "../conf/page.php"; ?>
 
+
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-
-                    
-
+                    <div id="modalData"
+                        data-need-perusahaan="<?php echo $needCompletePerusahaan ? 'true' : 'false'; ?>"
+                        data-need-gudang="<?php echo $needCompleteGudang ? 'true' : 'false'; ?>">
+                    </div>
                 </div>
                 <!-- /.container-fluid -->
 
-            <!-- End of Main Content -->
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Tim IT BBPOM Surabaya</span>
+                <!-- End of Main Content -->
+                <!-- Footer -->
+                <footer class="sticky-footer bg-white">
+                    <div class="container my-auto">
+                        <div class="copyright text-center my-auto">
+                            <span>Copyright &copy; Tim IT BBPOM Surabaya</span>
+                        </div>
                     </div>
-                </div>
-            </footer>
-            <!-- End of Footer -->
+                </footer>
+                <!-- End of Footer -->
+
+            </div>
+            <!-- End of Content Wrapper -->
 
         </div>
-        <!-- End of Content Wrapper -->
+        <!-- End of Page Wrapper -->
+
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
+
 
     </div>
-    <!-- End of Page Wrapper -->
-
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
 
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -330,8 +575,6 @@ if (isset($_SESSION['id_perusahaan'])) {
             </div>
         </div>
     </div>
-
-
 </body>
 
 </html>

@@ -9,89 +9,101 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>SERASI | Register</title>
-
+  <title>SERASI | Login</title>
   <!-- Custom fonts for this template-->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+  <link rel="icon" type="image/x-icon" href="../img/favicon.png" />
 
   <!-- Custom styles for this template-->
   <link href="css/sb-admin-2.min.css" rel="stylesheet">
-  <link rel="icon" type="image/x-icon" href="../img/favicon.png" />
+
+  <style>
+    body {
+      margin-top: 40px;
+      background-image: url(img/bg.jpg);
+      background-size: cover;
+    }
+  </style>
 
 </head>
 
-<body class="bg-gradient-success">
+<body>
 
   <div class="container">
 
-    <div class="card o-hidden border-0 shadow-lg my-5">
-      <div class="card-body p-0">
-        <!-- Nested Row within Card Body -->
-        <div class="col-lg-12 d-none d-lg-block my-auto" style="text-align: center;">
-          <img src="../assets/img/logo.png" class="img-fluid" alt="Responsive image" width="35%">
-        </div>
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="p-5">
-              <div class="text-center">
-                <h1 class="h4 text-gray-900 mb-4">Pendaftaran Akun Baru <span class="badge badge-primary" style="font-size: 50%;"></span></h1>
-              </div>
-              <form class="user" id="registrationForm" action="pages/auth/register_proces.php" method="POST">
-                <div class="form-group">
-                  <input type="number" class="form-control form-control-user" id="username" name="nib" placeholder="Input NIB yang telah didapatkan dari OSS" required>
-                  <span class="badge badge-info">Sebelum mendaftar Pastikan Anda mempunyai NIB</span>
+    <!-- Outer Row -->
+    <div class="row justify-content-center">
+
+      <div class="card col-12 col-md-6">
+        <div class="card-body p-0">
+          <!-- Nested Row within Card Body -->
+          <div class="col-lg-12 d-none d-lg-block my-auto" style="text-align: center;">
+            <img src="../assets/img/logo-header.png" class="img-fluid" alt="Responsive image" width="35%">
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="p-5">
+                <div class="text-center">
+                  <h1 class="h4 text-gray-900 mb-4">Pendaftaran Akun Baru <span class="badge badge-primary" style="font-size: 50%;"></span></h1>
                 </div>
-                <div class="form-group">
-                  <input type="text" class="form-control form-control-user" id="username" name="nama_perush" placeholder="Nama Perusahaan" required>
-                </div>
-                <div class="form-group">
-                  <textarea class="form-control" id="nama" name="alamat_perush" placeholder="Alamat Perusahaan" required rows="3"></textarea>
-                </div>
-                <div class="form-group">
-                  <input type="email" class="form-control form-control-user" id="email" name="email" placeholder="Email Perusahaan" required>
-                </div>
-                <div class="form-group">
-                  <input type="text" class="form-control form-control-user" id="nama" name="nama" placeholder="Nama Penanggung Jawab" required>
-                </div>
-                <div class="form-group">
-                  <input type="number" class="form-control form-control-user" id="notelp" name="no_wa" placeholder="Nomor WA yang bisa dihubungi untuk notifikasi pendaftaran" required>
-                </div>
-                <div class="input-group">
-                  <input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Buat password untuk login ke akun anda" required>
-                  <div class="input-group-append">
-                    <span class="input-group-text" id="togglePassword" style="cursor:pointer;">
-                      <i class="fa fa-eye fa-fw"></i>
+                <form class="user" id="registrationForm" action="pages/auth/register_proces.php" method="POST">
+                  <div class="form-group">
+                    <input type="number" class="form-control form-control-user" id="username" name="nib" placeholder="Input NIB yang telah didapatkan dari OSS" required>
+                    <span class="badge badge-info">Sebelum mendaftar Pastikan Anda mempunyai NIB</span>
+                  </div>
+                  <div class="form-group">
+                    <input type="text" class="form-control form-control-user" id="username" name="nama_perush" placeholder="Nama Perusahaan" required>
+                  </div>
+                  <div class="form-group">
+                    <textarea class="form-control" id="nama" name="alamat_perush" placeholder="Alamat Perusahaan" required rows="3"></textarea>
+                  </div>
+                  <div class="form-group">
+                    <input type="email" class="form-control form-control-user" id="email" name="email" placeholder="Email Perusahaan" required>
+                  </div>
+                  <div class="form-group">
+                    <input type="text" class="form-control form-control-user" id="nama" name="nama" placeholder="Nama Penanggung Jawab" required>
+                  </div>
+                  <div class="form-group">
+                    <input type="number" class="form-control form-control-user" id="notelp" name="no_wa" placeholder="Nomor WA yang bisa dihubungi untuk notifikasi pendaftaran" required>
+                  </div>
+                  <div class="input-group">
+                    <input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Buat password untuk login ke akun anda" required>
+                    <div class="input-group-append">
+                      <span class="input-group-text" id="togglePassword" style="cursor:pointer;">
+                        <i class="fa fa-eye fa-fw"></i>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <span id="passwordHelp" class="badge badge-warning">
+                      Minimal 6 karakter, huruf besar, huruf kecil, angka, dan karakter khusus.
+                    </span>
+                    <span class="badge bg-primary text-wrap text-white text-left">
+                      Mohon selalu diingat/catat karena password ini digunakan untuk login dan mengakses dokumen setiap saat dibutuhkan.
                     </span>
                   </div>
-                </div>
-                <div class="form-group">
-                  <span id="passwordHelp" class="badge badge-warning">
-                    Minimal 6 karakter, huruf besar, huruf kecil, angka, dan karakter khusus.
-                  </span>
-                  <span class="badge badge-primary">
-                    Mohon selalu diingat/catat karena password ini digunakan untuk login dan mengakses dokumen setiap saat dibutuhkan.
-                  </span>
-                </div>
-                <div class="form-group">
-                  <button class="button btn btn-success btn-large btn-user btn-block" type="submit">Register</button>
-                </div>
-              </form>
+                  <div class="form-group">
+                    <button class="button btn btn-success btn-large btn-user btn-block" type="submit">Register</button>
+                  </div>
+                </form>
 
-              <hr>
-              <div class="text-center">
-                <a class="small" href="forgot-password.html">Lupa Password?</a>
-              </div>
-              <div class="text-center">
-                <a class="small" href="login.php">Sudah Punya Akun? Login!</a>
-              </div>
-              <div class="text-center">
-                <a class="small" href="../">Kembali Ke Beranda</a>
+                <hr>
+                <div class="text-center">
+                  <a class="small" href="forgot-password.html">Lupa Password?</a>
+                </div>
+                <div class="text-center">
+                  <a class="small" href="login.php">Sudah Punya Akun? Login!</a>
+                </div>
+                <div class="text-center">
+                  <a class="small" href="../">Kembali Ke Beranda</a>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+
     </div>
 
   </div>

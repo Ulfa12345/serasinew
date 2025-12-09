@@ -1,7 +1,7 @@
 <?php
 header('Content-Type: application/json');
 include "../../../conf/conn.php";
-require '../../../vendor/autoload.php';
+require '../../../assets/vendor/autoload.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;

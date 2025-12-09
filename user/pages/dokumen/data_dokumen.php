@@ -18,8 +18,15 @@ $stmt->execute();
 $result = $stmt->get_result();
 ?>
 <div class="container-fluid">
-    <h3 class="mb-4">Data Pengajuan Dokumen</h3>
+    <div class="page-header">
+        <h1 class="h3 mb-1 fw-bold text-dark">Data Pengajuan Dokumen</h1>
+        <p class="text-muted">Kelola informasi pengajuan dokumen Anda</p>
+    </div>
+
     <div class="card shadow mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <span>Daftar pengajuan dokumen</span>
+        </div>
         <div class="card-body">
             <?php if ($result->num_rows > 0): ?>
                 <table class="table table-bordered">
@@ -29,9 +36,9 @@ $result = $stmt->get_result();
                             <th>Jenis Pengajuan</th>
                             <th>Tanggal Diajukan</th>
                             <th>Dokumen</th>
-                            <th>Aksi</th>
                             <th>Status</th>
                             <th>Catatan</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -41,8 +48,8 @@ $result = $stmt->get_result();
                             //serasi/user/pages/dokumen/uploads
                             // Ambil path file untuk setiap row
 
-                            $server_path_sipa = $_SERVER['DOCUMENT_ROOT'] . '/user/pages/dokumen/uploads/' . basename($row['upload_sipa']);
-                            $web_path_sipa = '/user/pages/dokumen/uploads/' . basename($row['upload_sipa']);
+                            //$server_path_sipa = $_SERVER['DOCUMENT_ROOT'] . '/user/pages/dokumen/uploads/' . basename($row['upload_sipa']);
+                            //$web_path_sipa = '/user/pages/dokumen/uploads/' . basename($row['upload_sipa']);
 
                             $server_path_sph = $_SERVER['DOCUMENT_ROOT'] . '/user/pages/dokumen/uploads/' . basename($row['upload_suratpermohonan']);
                             $web_path_sph = '/user/pages/dokumen/uploads/' . basename($row['upload_suratpermohonan']);
@@ -50,8 +57,8 @@ $result = $stmt->get_result();
                             $server_path_spn = $_SERVER['DOCUMENT_ROOT'] . '/user/pages/dokumen/uploads/' . basename($row['upload_suratpernyataan']);
                             $web_path_spn = '/user/pages/dokumen/uploads/' . basename($row['upload_suratpernyataan']);
 
-                            $server_path_pbf = $_SERVER['DOCUMENT_ROOT'] . '/user/pages/dokumen/uploads/' . basename($row['upload_ijin_pbf']);
-                            $web_path_pbf = '/user/pages/dokumen/uploads/' . basename($row['upload_ijin_pbf']);
+                            //$server_path_pbf = $_SERVER['DOCUMENT_ROOT'] . '/user/pages/dokumen/uploads/' . basename($row['upload_ijin_pbf']);
+                            //$web_path_pbf = '/user/pages/dokumen/uploads/' . basename($row['upload_ijin_pbf']);
 
                             $server_path_dnhlma = $_SERVER['DOCUMENT_ROOT'] . '/user/pages/dokumen/uploads/' . basename($row['upload_denahlama']);
                             $web_path_dnhlma = '/user/pages/dokumen/uploads/' . basename($row['upload_denahlama']);
@@ -68,25 +75,42 @@ $result = $stmt->get_result();
                                     <ul style="padding-left: 16px;">
                                         <?php // Cek dan tampilkan setiap dokumen jika ada 
                                         ?>
-                                        <li><a href="<?= $web_path_sipa ?>" target="_blank">SIPA</a></li>
                                         <li><a href="<?= $web_path_sph ?>" target="_blank">Surat Permohonan</a></li>
                                         <li><a href="<?= $web_path_spn ?>" target="_blank">Surat Pernyataan</a></li>
-                                        <li><a href="<?= $web_path_pbf ?>" target="_blank">Ijin PBF</a></li>
                                         <?php if (!empty($row['upload_denahlama'])): ?>
                                             <li><a href="<?= $web_path_dnhlma ?>" target="_blank">Denah Lama</a></li>
                                         <?php endif; ?>
                                         <li><a href="<?= $web_path_dnhbru ?>" target="_blank">Denah Baru</a></li>
                                     </ul>
                                 </td>
-                                <td><a href='index.php?page=form_edit_dok?&id=<?= $row['id_dok'] ?>' class='btn btn-warning'>Edit</a></td>
                                 <td><?php if ($row['status'] == 0) : ?>
-                                        <span class="badge badge-dark">Proses Evaluasi</span>
+                                        <span class="badge badge-secondary">
+                                            <i class="fas fa-clock"></i>&nbsp; Proses
+                                        </span>
+
                                     <?php elseif ($row['status'] == 1): ?>
-                                        <span class="badge badge-primary">Selesai</span>
+                                        <span class="badge badge-warning">
+                                            <i class="fas fa-list-alt"></i>&nbsp; Revisi
+                                        </span>
+
                                     <?php elseif ($row['status'] == 2): ?>
-                                        <span class="badge badge-danger">Revisi</span>
+                                        <span class="badge badge-primary">
+                                            <i class="fas fa-file-contract"></i>&nbsp; Menunggu Persetujuan
+                                        </span>
+
+                                    <?php elseif ($row['status'] == 3): ?>
+                                        <span class="badge badge-success">
+                                            <i class="fas fa-check-circle"></i>&nbsp; Selesai
+                                        </span>
+
                                     <?php endif ?>
                                 <td><?= $row['catatan'] ?></td>
+                                <td><?php if ($row['status'] == '1') { ?>
+                                        <a href="index.php?page=form_edit_dok&id=<?= $row['id_dok'] ?>" class="btn btn-warning">Edit</a>
+                                    <?php }
+                                    ?>
+
+                                </td>
                             </tr>
                         <?php endwhile; ?>
                     </tbody>

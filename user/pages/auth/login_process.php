@@ -49,19 +49,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $_SESSION['logged_in'] = true;
 
     // Check for warehouse data
-    $id_perusahaan = $row['id_perusahaan'];
-    $gudangStmt = $conn->prepare("SELECT * FROM tb_gudang WHERE id_perusahaan = ? LIMIT 1");
-    $gudangStmt->bind_param("i", $id_perusahaan);
-    $gudangStmt->execute();
-    $gudangResult = $gudangStmt->get_result();
+    // $id_perusahaan = $row['id_perusahaan'];
+    // $gudangStmt = $conn->prepare("SELECT * FROM tb_gudang WHERE id_perusahaan = ? LIMIT 1");
+    // $gudangStmt->bind_param("i", $id_perusahaan);
+    // $gudangStmt->execute();
+    // $gudangResult = $gudangStmt->get_result();
 
-    if ($gudangResult->num_rows > 0) {
-        $response['success'] = true;
-    } else {
-        $response['success'] = true;
-        $response['redirect'] = 'index.php?page=lengkapidata';
-        $response['message'] = 'Data Anda belum lengkap. Silahkan lengkapi data terlebih dahulu.';
-    }
+    // if ($gudangResult->num_rows > 0) {
+    $response['success'] = true;
+    // } else {
+    //     $response['success'] = true;
+    $response['redirect'] = 'index.php?page=dashboard';
+    //     $response['message'] = 'Data Anda belum lengkap. Silahkan lengkapi data terlebih dahulu.';
+    // }
 
     echo json_encode($response);
     exit;

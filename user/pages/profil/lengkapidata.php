@@ -2,11 +2,9 @@
     <!-- Page Heading -->
     <h1 class="h3 mb-4 text-gray-800">PROFIL PERUSAHAAN</h1>
 
-    <!-- Profil Perusahaan Section -->
     <div class="card shadow mb-4">
         <div class="card-body">
             <div class="row">
-                <!-- Kolom 1 -->
                 <div class="col-sm-6">
                     <div class="form-group row mb-3">
                         <label for="nib" class="col-sm-4 col-form-label">NIB</label>
@@ -94,60 +92,65 @@
                 <i class="fa fa-warehouse"></i> Lengkapi Data
             </h6>
         </div>
-        <div class="card-body">
+
+        <div class="card p-4 shadow">
+            <h4 class="mb-3">Form Upload Dokumen</h4>
             <form method="POST" id="lengkapiData" enctype="multipart/form-data">
-                <div class="row"> <!-- Baris Utama -->
-                    <!-- Kolom Kiri -->
-                    <div class="col-md-6">
-                        <div class="form-group mb-4" role="alert">
-                            <label for="upload_nib">Upload NIB</label>
-                            <div class="custom-file">
-                                <input type="file" class="custom-file-input"
-                                    id="upload_nib" name="upload_nib"
-                                    accept=".pdf,.jpg,.png">
-                                <label class="custom-file-label" for="upload_nib">
-                                    Pilih file...
-                                </label>
-                            </div>
-                            <small class="form-text text-muted">Format: PDF, JPG, PNG (Maks. 5MB)</small>
-                        </div>
-                        <div class="form-group mb-4">
-                            <label for="nama_gudang">Nama Gudang</label>
-                            <input type="text" class="form-control"
-                                id="nama_gudang" name="nama_gudang"
-                                maxlength="100" required>
-                            <small class="form-text text-muted">Maksimal 100 karakter</small>
-                        </div>
 
-                        <div class="form-group mb-4">
-                            <label for="alamat_gudang">Alamat Gudang</label>
-                            <input type="text" class="form-control"
-                                id="alamat_gudang" name="alamat_gudang"
-                                maxlength="100" required>
-                        </div>
-                    </div>
-
-                    <!-- Kolom Kanan -->
-                    <div class="col-md-6">
-
-
-                        <div class="form-group mb-4">
-                            <label for="keterangan">Keterangan</label>
-                            <textarea class="form-control" id="keterangan"
-                                name="keterangan" rows="5" required></textarea>
-                        </div>
+                <!-- Baris 1: Upload NIB -->
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label class="form-label">Upload NIB</label>
+                        <input type="file" name="upload_nib" class="form-control">
                     </div>
                 </div>
 
-                <!-- Tombol Submit -->
-                <div class="d-flex justify-content-end mt-4">
-                    <button type="submit" class="btn btn-primary px-4">
-                        <i class="fas fa-save"></i> Simpan
-                    </button>
+                <!-- Baris 2: Upload Ijin PBF -->
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label class="form-label">Upload Ijin PBF</label>
+                        <input type="file" name="upload_ijin_pbf" class="form-control">
+                    </div>
                 </div>
+
+                <!-- Baris 3: SIPA -->
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label class="form-label">Upload SIPA</label>
+                        <input type="file" name="upload_sipa" class="form-control">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Nomor SIPA</label>
+                        <input type="text" name="no_sipa" class="form-control">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Tanggal Berlaku SIPA</label>
+                        <input type="date" name="tgl_berlaku_sipa" class="form-control">
+                    </div>
+                </div>
+
+                <!-- Baris 4: CDOB -->
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label class="form-label">Upload Sertifikat CDOB</label>
+                        <input type="file" name="upload_cdob" class="form-control">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Nomor Sertifikat CDOB</label>
+                        <input type="text" name="no_cdob" class="form-control">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Tanggal Berlaku Sertifikat CDOB</label>
+                        <input type="date" name="tgl_berlaku_cdob" class="form-control">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary mt-3">Simpan</button>
             </form>
         </div>
+        </form>
     </div>
+</div>
 </div>
 
 <!-- Script untuk menampilkan nama file -->
@@ -164,8 +167,7 @@
             });
         }
     });
-</script>
-<script>
+
     document.addEventListener('DOMContentLoaded', function() {
         const form = document.getElementById('lengkapiData');
         const fileInput = document.getElementById('upload_nib');
