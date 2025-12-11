@@ -285,13 +285,13 @@ $data_petugas = $stmt_petugas->get_result();
 
                     <div class="form-group">
                         <label class="small font-weight-bold">Surat Persetujuan (TTE)</label>
-                        <input type="file" class="form-control" id="fileSurat" name="file_surat" accept=".pdf">
+                        <input type="file" class="form-control" id="fileSurat" name="surat_persetujuan" accept=".pdf">
                         <small class="text-muted">Format: PDF (Max 2MB)</small>
                     </div>
 
                     <div class="form-group">
                         <label class="small font-weight-bold">Denah Final (ACC)</label>
-                        <input type="file" class="form-control" id="fileDenah" name="file_denah" accept=".pdf,.jpg,.jpeg,.png">
+                        <input type="file" class="form-control" id="fileDenah" name="denah_acc" accept=".pdf">
                         <small class="text-muted">Format: PDF/JPG (Max 5MB)</small>
                     </div>
                 </div>

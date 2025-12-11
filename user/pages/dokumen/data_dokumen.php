@@ -111,19 +111,17 @@ $result = $stmt->get_result();
 
                                     <?php elseif ($row['status'] == '3') : ?>
                                         <?php if ($row['surat_persetujuan'] && $row['surat_persetujuan'] != 'Tidak ada') : ?>
-                                            <a href="<?= htmlspecialchars($row['surat_persetujuan']) ?>"
+                                           <a href="../uploads/<?= $row['surat_persetujuan'] ?>"
                                                 class="btn btn-success btn-sm mb-1"
-                                                target="_blank"
-                                                download>
+                                                target="_blank" download>
                                                 Surat Persetujuan
                                             </a>
                                         <?php endif; ?>
 
                                         <?php if ($row['denah_acc'] && $row['denah_acc'] != 'Tidak ada') : ?>
-                                            <a href="<?= htmlspecialchars($row['denah_acc']) ?>"
+                                            <a href="../uploads/<?= $row['denah_acc'] ?>"
                                                 class="btn btn-info btn-sm mb-1"
-                                                target="_blank"
-                                                download>
+                                                target="_blank" download>
                                                 Denah ACC
                                             </a>
                                         <?php endif; ?>
