@@ -48,17 +48,17 @@ $result = $stmt->get_result();
                             $no = 1;
                             while ($row = $result->fetch_assoc()):
                                 // Ambil path file untuk setiap row
-                                $server_path_sph = $_SERVER['DOCUMENT_ROOT'] . '/user/pages/dokumen/uploads/' . basename($row['upload_suratpermohonan']);
-                                $web_path_sph = '/user/pages/dokumen/uploads/' . basename($row['upload_suratpermohonan']);
+                                $server_path_sph = $_SERVER['DOCUMENT_ROOT'] . '/uploads/' . basename($row['upload_suratpermohonan']);
+                                $web_path_sph = '/uploads/' . basename($row['upload_suratpermohonan']);
 
-                                $server_path_spn = $_SERVER['DOCUMENT_ROOT'] . '/user/pages/dokumen/uploads/' . basename($row['upload_suratpernyataan']);
-                                $web_path_spn = '/user/pages/dokumen/uploads/' . basename($row['upload_suratpernyataan']);
+                                $server_path_spn = $_SERVER['DOCUMENT_ROOT'] . '/uploads/' . basename($row['upload_suratpernyataan']);
+                                $web_path_spn = '/uploads/' . basename($row['upload_suratpernyataan']);
 
-                                $server_path_dnhlma = $_SERVER['DOCUMENT_ROOT'] . '/user/pages/dokumen/uploads/' . basename($row['upload_denahlama']);
-                                $web_path_dnhlma = '/user/pages/dokumen/uploads/' . basename($row['upload_denahlama']);
+                                $server_path_dnhlma = $_SERVER['DOCUMENT_ROOT'] . '/uploads/' . basename($row['upload_denahlama']);
+                                $web_path_dnhlma = '/uploads/' . basename($row['upload_denahlama']);
 
-                                $server_path_dnhbru = $_SERVER['DOCUMENT_ROOT'] . '/user/pages/dokumen/uploads/' . basename($row['upload_denahbaru']);
-                                $web_path_dnhbru = '/user/pages/dokumen/uploads/' . basename($row['upload_denahbaru']);
+                                $server_path_dnhbru = $_SERVER['DOCUMENT_ROOT'] . '/uploads/' . basename($row['upload_denahbaru']);
+                                $web_path_dnhbru = '/uploads/' . basename($row['upload_denahbaru']);
                             ?>
                                 <tr>
                                     <td><?= $no++ ?></td>

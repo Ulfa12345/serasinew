@@ -50,7 +50,7 @@ if (isset($_FILES['file_sipa_apj_gudang']) && $_FILES['file_sipa_apj_gudang']['e
     }
 
     // Pastikan folder benar (SESUIKAN LOKASI FILE PHP-MU)
-    $targetDir = "../../uploads/sipa_apj_gudang/";
+    $targetDir = "../../../uploads/sipa_apj_gudang/";
 
     // Buat nama file baru
     $newFileName = 'SIPA_' . time() . '_' . rand(1000, 9999) . '.' . $ext;

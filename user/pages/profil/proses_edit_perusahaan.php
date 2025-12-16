@@ -11,7 +11,7 @@ if (!isset($_SESSION['id_perusahaan'])) {
 $id_perusahaan = $_SESSION['id_perusahaan'];
 
 // Folder upload
-$upload_dir = "../../uploads/";
+$upload_dir = "../../../uploads/";
 
 // die(var_dump($_POST));
 

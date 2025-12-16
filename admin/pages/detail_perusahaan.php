@@ -120,7 +120,7 @@ if (isset($_GET['id'])) {
                                 <div class="flex-grow-1">
                                     <h6 class="fw-bold text-dark mb-1">Dokumen NIB</h6>
                                     <p class="text-muted small mb-2">Nomor Induk Berusaha</p>
-                                    <a href="../../serasi/user/uploads/<?= $data['upload_nib'] ?>" target="_blank" class="btn btn-sm btn-outline-success w-100">
+                                    <a href="../../uploads/<?= $data['upload_nib'] ?>" target="_blank" class="btn btn-sm btn-outline-success w-100">
                                         <i class="fas fa-eye me-1"></i> Lihat Dokumen
                                     </a>
                                 </div>
@@ -139,7 +139,7 @@ if (isset($_GET['id'])) {
                                 <div class="flex-grow-1">
                                     <h6 class="fw-bold text-dark mb-1">Ijin PBF</h6>
                                     <p class="text-muted small mb-2">Izin Pedagang Besar Farmasi</p>
-                                    <a href="../../serasi/user/uploads/<?= $data['upload_ijin_pbf'] ?>" target="_blank" class="btn btn-sm btn-outline-success w-100">
+                                    <a href="../../uploads/<?= $data['upload_ijin_pbf'] ?>" target="_blank" class="btn btn-sm btn-outline-success w-100">
                                         <i class="fas fa-eye me-1"></i> Lihat Dokumen
                                     </a>
                                 </div>
@@ -171,7 +171,7 @@ if (isset($_GET['id'])) {
                                     <span class="fw-bold text-dark"><?= date('d M Y', strtotime($data['tgl_berlaku_sipa'])) ?></span>
                                 </div>
                             </div>
-                            <a href="../../serasi/user/uploads/<?= $data['upload_sipa'] ?>" target="_blank" class="btn btn-sm btn-outline-success w-100 mt-1">
+                            <a href="../../uploads/<?= $data['upload_sipa'] ?>" target="_blank" class="btn btn-sm btn-outline-success w-100 mt-1">
                                 <i class="fas fa-eye me-1"></i> Lihat Dokumen
                             </a>
                         </div>
@@ -201,7 +201,7 @@ if (isset($_GET['id'])) {
                                     <span class="fw-bold text-dark"><?= date('d M Y', strtotime($data['tgl_berlaku_cdob'])) ?></span>
                                 </div>
                             </div>
-                            <a href="../../serasi/user/uploads/<?= $data['upload_cdob'] ?>" target="_blank" class="btn btn-sm btn-outline-success w-100 mt-1">
+                            <a href="../../uploads/<?= $data['upload_cdob'] ?>" target="_blank" class="btn btn-sm btn-outline-success w-100 mt-1">
                                 <i class="fas fa-eye me-1"></i> Lihat Dokumen
                             </a>
                         </div>
@@ -258,7 +258,7 @@ if (isset($_GET['id'])) {
                                     <td><?= htmlspecialchars($row['alamat_gudang']); ?></td>
                                     <td>
                                         <?php if (!empty($row['file_sipa_apj_gudang'])) : ?>
-                                            <a href="../../serasi/user/uploads/sipa_apj_gudang/<?= htmlspecialchars($row['file_sipa_apj_gudang']); ?>"
+                                            <a href="../../uploads/sipa_apj_gudang/<?= htmlspecialchars($row['file_sipa_apj_gudang']); ?>"
                                                 target="_blank" class="btn btn-sm btn-info">
                                                 Lihat File
                                             </a>

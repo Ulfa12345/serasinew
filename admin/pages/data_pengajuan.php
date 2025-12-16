@@ -150,7 +150,7 @@ $data_petugas = $stmt_petugas->get_result();
                                                     data-status="<?= htmlspecialchars($row['status']) ?>"
                                                     data-catatan="<?= htmlspecialchars($row['catatan'] ?? '') ?>"
                                                     title="Verifikasi/Ubah Status">
-                                                    <i class="fas fa-edit fa-sm"></i>
+                                                    <i class="fas fa-check fa-sm"></i>
                                                 </button>
 
                                                 <a class="btn btn-info btn-sm px-3 py-2 mr-1"

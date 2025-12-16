@@ -54,7 +54,7 @@
                                 <td><?= htmlspecialchars($row['alamat_gudang']); ?></td>
                                 <td class="text-center">
                                     <?php if (!empty($row['file_sipa_apj_gudang'])): ?>
-                                        <a href="uploads/sipa_apj_gudang/<?= htmlspecialchars($row['file_sipa_apj_gudang']); ?>" target="_blank" class="btn btn-sm btn-success">
+                                        <a href="../uploads/sipa_apj_gudang/<?= htmlspecialchars($row['file_sipa_apj_gudang']); ?>" target="_blank" class="btn btn-sm btn-success">
                                             Lihat File
                                         </a>
                                     <?php else: ?>

@@ -3,7 +3,7 @@ session_start();
 include "../../../conf/conn.php"; // Sesuaikan path
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $targetDir = "user/pages/uploads/nib";
+    $targetDir = "../../../uploads/nib";
     $allowedTypes = ['pdf', 'jpg', 'png'];
     $maxSize = 10 * 1024 * 1024; // 5MB
     $companyId = $_SESSION['id_perusahaan'];

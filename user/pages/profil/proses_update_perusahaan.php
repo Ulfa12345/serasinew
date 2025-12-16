@@ -26,7 +26,7 @@ try {
     function handleFileUpload($conn, $id, $inputName, $dbColumn)
     {
         // Path Folder Upload (Mundur 2 folder dari pages/profil/ ke root/uploads/)
-        $targetDir = "../../uploads/";
+        $targetDir = "../../../uploads/";
 
         // Jika ada file baru diupload
         if (isset($_FILES[$inputName]) && $_FILES[$inputName]['error'] == 0) {

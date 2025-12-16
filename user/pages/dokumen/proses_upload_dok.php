@@ -32,12 +32,34 @@ try {
             }
 
             $newName = uniqid() . '.' . $ext;
-            $targetPath = '../../uploads/' . $newName;
+            $targetPath = '../../../uploads/' . $newName;
 
             if (move_uploaded_file($file['tmp_name'], $targetPath)) {
                 return $newName;
             }
             throw new Exception("Gagal mengupload file $name");
+        }
+
+
+        //insert to log
+        function insertLog($conn, $id_dok, $id_perusahaan, $description)
+        {
+            $id_admin = NULL;
+
+            // Siapkan statement INSERT
+            $stmt_log = $conn->prepare("
+            INSERT INTO tb_dokumen_log (id_dok, id_perusahaan, id_admin, description) 
+                VALUES (?, ?, ?, ?)
+            ");
+
+            $stmt_log->bind_param("iiss", $id_dok, $id_perusahaan, $id_admin, $description);
+
+            // Eksekusi query log
+            if (!$stmt_log->execute()) {
+                // Log ke error_log PHP jika gagal, tapi jangan ganggu flow utama
+                error_log("Gagal memasukkan log: " . $stmt_log->error);
+            }
+            $stmt_log->close();
         }
 
         // Upload semua file dengan validasi
@@ -55,8 +77,11 @@ try {
             }
         }
 
+        $log_description = "";
+
         // Handle berdasarkan jenis pengajuan
         if ($jenis_pengajuan === 'Permohonan Baru') {
+            $log_description = "Pengajuan dokumen baru ('Permohonan Baru') telah dibuat.";
             $stmt = $conn->prepare("INSERT INTO tb_dokumen (
                 id_perusahaan,
                 jenis_pengajuan,
@@ -76,6 +101,7 @@ try {
                 $status
             );
         } elseif ($jenis_pengajuan === 'Perubahan Denah') {
+            $log_description = "Pengajuan dokumen baru ('Perubahan Denah') telah dibuat.";
             // Ambil denah lama terbaru
             $denah_lama = null;
             $getLastDenah = $conn->prepare("
@@ -119,6 +145,8 @@ try {
 
         // Eksekusi query
         if ($stmt->execute()) {
+            $id_dok_baru = $stmt->insert_id; 
+            insertLog($conn, $id_dok_baru, $id_perusahaan, $log_description);
             echo json_encode([
                 'status' => 'success',
                 'message' => 'Pengajuan berhasil disimpan!',

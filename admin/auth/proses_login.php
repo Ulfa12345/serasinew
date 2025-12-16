@@ -38,19 +38,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 }
 
-
-// Bandingkan password (tanpa hashing, karena tidak ada info hash di database)
-if ($password === $data['password']) {
+if (password_verify($password, $data['password'])) {
     $_SESSION['id_admin'] = $data['id_admin'];
     echo '<script>
-    alert("Berhasil login!");
-    window.location.href = "../pages/dashboard.php";
-</script>';
+        alert("Berhasil login!");
+        window.location.href = "../pages/dashboard.php";
+    </script>';
     exit;
 } else {
+    // Password tidak cocok
     echo '<script>
-    alert("Password salah!");
-    window.location.href = "../auth/login.php";
-</script>';
+        alert("Password salah!");
+        window.location.href = "../auth/login.php";
+    </script>';
     exit;
 }

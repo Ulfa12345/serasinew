@@ -121,24 +121,24 @@ if (isset($_GET['id'])) {
                         <tr>
                             <td>Surat Permohonan</td>
                             <td><?= htmlspecialchars($data_dokumen['upload_suratpermohonan']) ?></td>
-                            <td><a href="../../../uploads/<?= htmlspecialchars($data_dokumen['upload_suratpermohonan']) ?>" target="_blank" class="btn btn-sm btn-info">Lihat</a></td>
+                            <td><a href="../../uploads/<?= htmlspecialchars($data_dokumen['upload_suratpermohonan']) ?>" target="_blank" class="btn btn-sm btn-info">Lihat</a></td>
                         </tr>
                         <tr>
                             <td>Surat Pernyataan</td>
                             <td><?= htmlspecialchars($data_dokumen['upload_suratpernyataan']) ?></td>
-                            <td><a href="../../../uploads/<?= htmlspecialchars($data_dokumen['upload_suratpernyataan']) ?>" target="_blank" class="btn btn-sm btn-info">Lihat</a></td>
+                            <td><a href="../../uploads/<?= htmlspecialchars($data_dokumen['upload_suratpernyataan']) ?>" target="_blank" class="btn btn-sm btn-info">Lihat</a></td>
                         </tr>
                         <?php if ($data_dokumen['upload_denahlama']): ?>
                             <tr>
                                 <td>Denah Lama (Perubahan Denah)</td>
                                 <td><?= htmlspecialchars($data_dokumen['upload_denahlama']) ?></td>
-                                <td><a href="../../../uploads/<?= htmlspecialchars($data_dokumen['upload_denahlama']) ?>" target="_blank" class="btn btn-sm btn-info">Lihat</a></td>
+                                <td><a href="../../uploads/<?= htmlspecialchars($data_dokumen['upload_denahlama']) ?>" target="_blank" class="btn btn-sm btn-info">Lihat</a></td>
                             </tr>
                         <?php endif; ?>
                         <tr>
                             <td>Denah Baru/Yang Diajukan</td>
                             <td><?= htmlspecialchars($data_dokumen['upload_denahbaru']) ?></td>
-                            <td><a href="../../../uploads/<?= htmlspecialchars($data_dokumen['upload_denahbaru']) ?>" target="_blank" class="btn btn-sm btn-info">Lihat</a></td>
+                            <td><a href="../../uploads/<?= htmlspecialchars($data_dokumen['upload_denahbaru']) ?>" target="_blank" class="btn btn-sm btn-info">Lihat</a></td>
                         </tr>
 
                         <?php if (!empty($data_dokumen['catatan'])): ?>

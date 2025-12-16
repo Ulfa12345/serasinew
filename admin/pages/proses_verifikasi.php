@@ -4,6 +4,24 @@ header('Content-Type: application/json');
 
 include "../../conf/conn.php";
 
+$id_admin_session = isset($_SESSION['id_admin']) ? $_SESSION['id_admin'] : NULL;
+$id_perusahaan_dok = NULL;
+
+function insertLog($conn, $id_dok, $id_perusahaan, $id_admin, $description) {
+    // Siapkan statement INSERT
+    $stmt_log = $conn->prepare("
+        INSERT INTO tb_dokumen_log (id_dok, id_perusahaan, id_admin, description) 
+        VALUES (?, ?, ?, ?)
+    ");
+
+    $stmt_log->bind_param("iiss", $id_dok, $id_perusahaan, $id_admin, $description);
+
+    if (!$stmt_log->execute()) {
+        error_log("Gagal memasukkan log: " . $stmt_log->error);
+    }
+    $stmt_log->close();
+}
+
 if ($conn->connect_error) {
     echo json_encode(['success' => false, 'msg' => 'Database Error!', 'error' => $conn->connect_error]);
     exit;
@@ -17,7 +35,7 @@ $note   = $_POST['catatan'];
 $surat_persetujuan = null;
 $denah_acc = null;
 
-$uploadPath = "../../uploads/";  // sesuaikan dengan foldermu
+$uploadPath = "../../uploads/"; 
 
 if ($status == 3) {
 
@@ -109,6 +127,9 @@ if ($stmt->execute()) {
     else if ($status == 2) $statusText = "Menunggu Persetujuan";
     else if ($status == 3) $statusText = "Selesai";
     else $statusText = "Status tidak dikenal.";
+
+    $log_description = "Status dokumen diubah menjadi **" . $statusText . "** oleh Admin. Catatan: " . (empty($note) ? "Tidak ada" : $note);
+    insertLog($conn, $id, $id_perusahaan_dok, $id_admin_session, $log_description);
 
     $waMessage = "<p>Proses dokumen $nama_perusahaan status $statusText dengan catatan $note</p>
                   <p>Pesan otomatis ini dikirim melalui sistem, mohon untuk tidak dibalas.</p>";
