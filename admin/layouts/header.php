@@ -17,7 +17,7 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet">
 
-    <!-- SB Admin 2 CSS (Bootstrap 4) -->
+    <!-- Serasi CSS (Bootstrap 4) -->
     <link href="../../assets/css/sb-admin-2.min.css" rel="stylesheet">
 
     <!-- SweetAlert2 CSS -->
@@ -33,7 +33,7 @@
     <!-- jQuery Easing -->
     <script src="../../assets/vendor/jquery-easing/jquery.easing.min.js"></script>
 
-    <!-- SB Admin 2 JS -->
+    <!-- Serasi JS -->
     <script src="../../assets/js/sb-admin-2.min.js"></script>
 
     <!-- SweetAlert2 JS -->
