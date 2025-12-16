@@ -1,1 +1,4 @@
 node_modules
+/conf/conn.php
+/user/pages/dokumen/uploads
+/uploads
